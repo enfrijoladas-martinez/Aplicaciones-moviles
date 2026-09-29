@@ -1,10 +1,10 @@
-import { View, Text } from 'react-nativxe';
+import { View, Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import HomeScreen from './src/screens/HomeScreen';
-import ProfileScreen from './src/screens/ProfileScreen';
-import SearchScreen from './src/screens/SearchScreen';
+import HomeScreen from './TabNavigation/Componentes/HomeScreen';
+import ProfileScreen from './TabNavigation/Componentes/ProfileScreen';
+import SearchScreen from './TabNavigation/Componentes/SearchScreen';
 
 const Tab = createBottomTabNavigator();
 

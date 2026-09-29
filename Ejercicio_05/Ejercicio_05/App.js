@@ -4,10 +4,10 @@ import { NavigationContainer } from '@react-navigation/native';
 
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import HomeScreen from './src/screens/HomeScreen';
-import ImcScreen from './src/screens/ImcScreen';
-import CurrencyScreen from './src/screens/CurrencyScreen';
-import TipScreen from './src/screens/TipScreen';
+import HomeScreen from './Componentes/HomeScreen';
+import ImcScreen from './Componentes/ImcScreen';
+import CurrencyScreen from './Componentes/Currency';
+import TipScreen from './Componentes/TipScreen';
 
 const Stack = createNativeStackNavigator();
 
