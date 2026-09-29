@@ -9,16 +9,28 @@ Repositorio de la materia de Aplicaciones Moviles.
 
 ## Actividades
 
-| Actividad | Carpeta | Descripcion |
-|---|---|---|
-| Actividad 02 | `Ejemplo_02/` | Proyecto React Native (Expo, JavaScript). Ejecucion en modo web y componente `DemoChildren` que demuestra `props.children`. |
+| Carpeta | Tema |
+|---|---|
+| `Ejercicio_01/` | Componentes basicos, props e imagen remota |
+| `Ejemplo_02/` | `props.children`, input de texto |
+| `Ejercicio_03/` | Imagen de fondo, `FlatList` y `SectionList` |
+| `Ejercicio_04/` | Modal personalizado |
+| `DynamicFlatlist/` | `FlatList` de materias con modal de detalle |
+| `FitCalc/` | Calculadora de IMC con modal de resultado |
+| `Ejercicio_05/` | Navegacion con Stack (IMC, divisas, propina) |
+| `Ejercicio_06/` | Navegacion con Tabs (Inicio, Buscar, Perfil) |
+| `Ejercicio_09/` | Animaciones con `Animated` |
+| `Ejercicio_10/` | App integradora (dados, IMC, propinas, gato) |
+| `Ejercicio_11/` | Sensores: acelerometro, giroscopio, magnetometro, podometro |
+| `Ejercicio_12/` | Mapas |
+| `Ejercicio_13/` | Consumo de API con MongoDB |
 
-## Como ejecutar Ejemplo_02
+## Como correr cualquiera
 
 ```bash
-cd Ejemplo_02
+cd <carpeta>
 npm install
-npm run web
+npx expo start
 ```
 
-Abre http://localhost:8081 en el navegador.
+Escanea el QR con Expo Go. Si el celular no esta en la misma red, usa `npx expo start --tunnel`.
