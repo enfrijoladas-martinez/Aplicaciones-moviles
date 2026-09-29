@@ -39,3 +39,8 @@ yarn-error.*
 # generated native folders
 /ios
 /android
+
+# servidor de la API
+.env
+API/.env
+API/node_modules/
