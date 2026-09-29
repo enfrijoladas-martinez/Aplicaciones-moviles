@@ -19,16 +19,16 @@ Cada carpeta es un proyecto independiente con su propio `package.json`.
 | 2 | [Ejemplo_02](./Ejemplo_02) | `props.children` e input de texto | — |
 | 3 | [Ejercicio_03](./Ejercicio_03) | Imagenes, `FlatList` y `SectionList` | — |
 | 4 | [Ejercicio_04](./Ejercicio_04) | Modal personalizado | — |
-| 5 | [DynamicFlatlist](./DynamicFlatlist) | Lista dinamica con modal de detalle | — |
-| 6 | [FitCalc](./FitCalc) | Calculadora de IMC con modal | — |
-| 7 | [Ejercicio_05](./Ejercicio_05) | Navegacion **Stack** | `@react-navigation/native-stack` |
-| 8 | [Ejercicio_06](./Ejercicio_06) | Navegacion **Tabs** | `@react-navigation/bottom-tabs` |
-| 9 | [Ejercicio_07](./Ejercicio_07) | Navegacion **Drawer** | `@react-navigation/drawer`, `reanimated` |
-| 10 | [Ejercicio_09](./Ejercicio_09) | Animaciones | `Animated` |
-| 11 | [Ejercicio_10](./Ejercicio_10) | App integradora | `@expo/vector-icons` |
-| 12 | [Ejercicio_11](./Ejercicio_11) | Sensores del dispositivo | `expo-sensors` |
-| 13 | [Ejercicio_12](./Ejercicio_12) | Mapas | `react-native-maps`, `expo-location` |
-| 14 | [Ejercicio_13](./Ejercicio_13) | Consumo de API con MongoDB | `express`, `mongodb`, `bcryptjs` |
+| 5 | [Ejercicio_05](./Ejercicio_05) | Navegacion **Stack** | `@react-navigation/native-stack` |
+| 6 | [Ejercicio_06](./Ejercicio_06) | Navegacion **Tabs** | `@react-navigation/bottom-tabs` |
+| 7 | [Ejercicio_07](./Ejercicio_07) | Navegacion **Drawer** | `@react-navigation/drawer`, `reanimated` |
+| 8 | [Ejercicio_08](./Ejercicio_08) | Lista dinamica con modal de detalle | — |
+| 9 | [Ejercicio_09](./Ejercicio_09) | Animaciones | `Animated` |
+| 10 | [Ejercicio_10](./Ejercicio_10) | App integradora | `@expo/vector-icons` |
+| 11 | [Ejercicio_11](./Ejercicio_11) | Sensores del dispositivo | `expo-sensors` |
+| 12 | [Ejercicio_12](./Ejercicio_12) | Mapas | `react-native-maps`, `expo-location` |
+| 13 | [Ejercicio_13](./Ejercicio_13) | Consumo de API con MongoDB | `express`, `mongodb`, `bcryptjs` |
+| — | [FitCalc](./FitCalc) | Calculadora de IMC con modal | — |
 
 ---
 
@@ -56,52 +56,49 @@ Diferencia entre un componente fijo y uno parametrizado.
 
 ### 4. [Ejercicio_04](./Ejercicio_04) — Modal
 
+Caja de texto y boton que abre un modal saludando con lo que se escribio.
+
 - `componentes/CustomModal.jsx` — modal reutilizable que recibe su contenido por props
 
-### 5. [DynamicFlatlist](./DynamicFlatlist) — Lista con detalle
-
-`FlatList` de materias; al tocar una se abre un modal con profesor, creditos y horario.
-Un solo estado (`seleccionado`) controla que se muestra y si el modal esta abierto.
-
-### 6. [FitCalc](./FitCalc) — Calculadora de IMC
-
-Captura peso y altura, valida la entrada y muestra el resultado en un modal que
-clasifica por color: bajo peso, normal, sobrepeso u obesidad.
-
-### 7. [Ejercicio_05](./Ejercicio_05) — Navegacion Stack
+### 5. [Ejercicio_05](./Ejercicio_05) — Navegacion Stack
 
 Menu principal que navega a tres calculadoras mediante `createNativeStackNavigator`.
 
 - `Componentes/HomeScreen.jsx`, `ImcScreen.jsx`, `Currency.jsx`, `TipScreen.jsx`
 
-### 8. [Ejercicio_06](./Ejercicio_06) — Navegacion Tabs
+### 6. [Ejercicio_06](./Ejercicio_06) — Navegacion Tabs
 
 Tres pestanas inferiores con `createBottomTabNavigator`: Inicio, Buscar y Perfil.
 
-### 9. [Ejercicio_07](./Ejercicio_07) — Navegacion Drawer
+### 7. [Ejercicio_07](./Ejercicio_07) — Navegacion Drawer
 
 Menu lateral con `createDrawerNavigator` y cuatro pantallas: Inicio, Buscar, Perfil y Ajustes.
 Se abre deslizando desde el borde o con `navigation.openDrawer()`.
 
 > Toda la app va envuelta en `GestureHandlerRootView`; sin eso el gesto no funciona.
 
-### 10. [Ejercicio_09](./Ejercicio_09) — Animaciones
+### 8. [Ejercicio_08](./Ejercicio_08) — Lista con detalle
+
+`FlatList` de materias; al tocar una se abre un modal con profesor, creditos y horario.
+Un solo estado (`seleccionado`) controla que se muestra y si el modal esta abierto.
+
+### 9. [Ejercicio_09](./Ejercicio_09) — Animaciones
 
 Uso de la API `Animated` de React Native.
 
-### 11. [Ejercicio_10](./Ejercicio_10) — App integradora
+### 10. [Ejercicio_10](./Ejercicio_10) — App integradora
 
 Varias pantallas en un solo proyecto: dados, IMC, propinas y gato (tic-tac-toe).
 
-### 12. [Ejercicio_11](./Ejercicio_11) — Sensores
+### 11. [Ejercicio_11](./Ejercicio_11) — Sensores
 
 Lectura en vivo de acelerometro, giroscopio, magnetometro y podometro con `expo-sensors`.
 
-### 13. [Ejercicio_12](./Ejercicio_12) — Mapas
+### 12. [Ejercicio_12](./Ejercicio_12) — Mapas
 
 Mapa con `react-native-maps`.
 
-### 14. [Ejercicio_13](./Ejercicio_13) — Consumo de API con MongoDB
+### 13. [Ejercicio_13](./Ejercicio_13) — Consumo de API con MongoDB
 
 El unico proyecto con backend propio.
 
@@ -114,6 +111,11 @@ Las contrasenas se guardan hasheadas con bcrypt. La cadena de conexion se lee de
 `API/.env`, que **no** se sube al repositorio (ver `API/.env.example`).
 
 Instrucciones completas en su [README](./Ejercicio_13/ConsumeAPI_MongoDB/README.md).
+
+### [FitCalc](./FitCalc) — Calculadora de IMC
+
+Captura peso y altura, valida la entrada y muestra el resultado en un modal que
+clasifica por color: bajo peso, normal, sobrepeso u obesidad.
 
 ---
 

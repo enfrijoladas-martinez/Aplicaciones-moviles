@@ -20,7 +20,7 @@ El indice completo de los proyectos, con el detalle de cada uno, esta en
 | `Ejemplo_02/` | `props.children`, input de texto |
 | `Ejercicio_03/` | Imagen de fondo, `FlatList` y `SectionList` |
 | `Ejercicio_04/` | Modal personalizado |
-| `DynamicFlatlist/` | `FlatList` de materias con modal de detalle |
+| `Ejercicio_08/` | `FlatList` de materias con modal de detalle |
 | `FitCalc/` | Calculadora de IMC con modal de resultado |
 | `Ejercicio_05/` | Navegacion con Stack (IMC, divisas, propina) |
 | `Ejercicio_06/` | Navegacion con Tabs (Inicio, Buscar, Perfil) |
