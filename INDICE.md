@@ -23,7 +23,7 @@ Cada carpeta es un proyecto independiente con su propio `package.json`.
 | 6 | [FitCalc](./FitCalc) | Calculadora de IMC con modal | — |
 | 7 | [Ejercicio_05](./Ejercicio_05) | Navegacion **Stack** | `@react-navigation/native-stack` |
 | 8 | [Ejercicio_06](./Ejercicio_06) | Navegacion **Tabs** | `@react-navigation/bottom-tabs` |
-| 9 | [DrawerNavigation](./DrawerNavigation) | Navegacion **Drawer** | `@react-navigation/drawer`, `reanimated` |
+| 9 | [Ejercicio_07](./Ejercicio_07) | Navegacion **Drawer** | `@react-navigation/drawer`, `reanimated` |
 | 10 | [Ejercicio_09](./Ejercicio_09) | Animaciones | `Animated` |
 | 11 | [Ejercicio_10](./Ejercicio_10) | App integradora | `@expo/vector-icons` |
 | 12 | [Ejercicio_11](./Ejercicio_11) | Sensores del dispositivo | `expo-sensors` |
@@ -78,7 +78,7 @@ Menu principal que navega a tres calculadoras mediante `createNativeStackNavigat
 
 Tres pestanas inferiores con `createBottomTabNavigator`: Inicio, Buscar y Perfil.
 
-### 9. [DrawerNavigation](./DrawerNavigation) — Navegacion Drawer
+### 9. [Ejercicio_07](./Ejercicio_07) — Navegacion Drawer
 
 Menu lateral con `createDrawerNavigator` y cuatro pantallas: Inicio, Buscar, Perfil y Ajustes.
 Se abre deslizando desde el borde o con `navigation.openDrawer()`.
