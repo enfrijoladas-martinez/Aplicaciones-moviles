@@ -7,6 +7,11 @@ Repositorio de la materia de Aplicaciones Moviles.
 - `parcial` — actividades del periodo parcial (aqui va todo el trabajo del semestre en curso).
 - `ordinario` — trabajo del periodo ordinario.
 
+## Indice
+
+El indice completo de los proyectos, con el detalle de cada uno, esta en
+**[INDICE.md](./INDICE.md)**.
+
 ## Actividades
 
 | Carpeta | Tema |
