@@ -29,6 +29,7 @@ Cada carpeta es un proyecto independiente con su propio `package.json`.
 | 12 | [Ejercicio_12](./Ejercicio_12) | Mapas | `react-native-maps`, `expo-location` |
 | 13 | [Ejercicio_13](./Ejercicio_13) | Consumo de API con MongoDB | `express`, `mongodb`, `bcryptjs` |
 | — | [FitCalc](./FitCalc) | Calculadora de IMC con modal | — |
+| — | [Proyecto Parcial](./Proyecto%20Parcial) | **Proyecto final:** agenda de citas | `@react-navigation/drawer`, `Animated` |
 
 ---
 
@@ -116,6 +117,22 @@ Instrucciones completas en su [README](./Ejercicio_13/ConsumeAPI_MongoDB/README.
 
 Captura peso y altura, valida la entrada y muestra el resultado en un modal que
 clasifica por color: bajo peso, normal, sobrepeso u obesidad.
+
+### [Proyecto Parcial](./Proyecto%20Parcial) — Agenda de citas Barber
+
+Proyecto final de la materia. Aplicacion para que una barberia, estetica o consultorio
+controle sus citas sin depender de internet.
+
+- `pantallas/SplashScreen.js` — pantalla de bienvenida animada con `spring` y `sequence`
+- `pantallas/HoyScreen.js` — ingreso del dia, ocupacion de la jornada y siguiente cita
+- `pantallas/AgendaScreen.js` — todas las citas en `SectionList` agrupadas por dia
+- `pantallas/ClientesScreen.js` — historial, ticket promedio y servicio frecuente
+- `pantallas/ServiciosScreen.js` — catalogo con ranking de los mas solicitados
+- `componentes/` — tarjetas, modales, contador animado y barra de avance
+- `datos/` — clientes, servicios y citas iniciales, todo local
+
+Al agendar, las horas que se traslapan con otra cita aparecen tachadas y no se pueden
+elegir. El calculo considera la duracion del servicio seleccionado.
 
 ---
 
