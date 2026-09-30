@@ -4,13 +4,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { colores, sombra } from '../estilos/tema';
 
 const temas = [
-  { icono: 'phone-portrait-outline', titulo: 'Splash Screen', detalle: 'Animated con spring, timing, sequence y parallel' },
-  { icono: 'menu-outline', titulo: 'Navegacion Drawer', detalle: 'createDrawerNavigator con cuatro pantallas' },
-  { icono: 'albums-outline', titulo: 'Modales', detalle: 'Formulario de producto y detalle con confirmacion' },
-  { icono: 'pulse-outline', titulo: 'Animaciones', detalle: 'Contadores progresivos y barras de nivel' },
-  { icono: 'list-outline', titulo: 'Listas', detalle: 'FlatList con busqueda y SectionList por fecha' },
-  { icono: 'create-outline', titulo: 'Formularios', detalle: 'TextInput, Switch y validacion de datos' },
-  { icono: 'calculator-outline', titulo: 'Calculos', detalle: 'Valor invertido, margen de ganancia y minimos' },
+  { icono: 'phone-portrait-outline', titulo: 'Splash Screen', detalle: 'Animated con spring, sequence, parallel y delay' },
+  { icono: 'menu-outline', titulo: 'Navegacion Drawer', detalle: 'createDrawerNavigator con cinco pantallas' },
+  { icono: 'albums-outline', titulo: 'Modales', detalle: 'Agendar cita, detalle con acciones y alta de servicios' },
+  { icono: 'pulse-outline', titulo: 'Animaciones', detalle: 'Contadores progresivos y barras de avance' },
+  { icono: 'list-outline', titulo: 'Listas', detalle: 'FlatList con busqueda y SectionList agrupada por dia' },
+  { icono: 'create-outline', titulo: 'Formularios', detalle: 'TextInput, Switch y validacion antes de guardar' },
+  { icono: 'calculator-outline', titulo: 'Calculos', detalle: 'Ingresos, ocupacion, ticket promedio y traslapes' },
   { icono: 'cube-outline', titulo: 'Componentes', detalle: 'Reutilizables con props y estilos compartidos' },
 ];
 
@@ -35,28 +35,29 @@ export default function AcercaScreen() {
       <Animated.View style={{ opacity: entrada, transform: [{ translateY: subida }] }}>
         <View style={estilos.portada}>
           <View style={estilos.logo}>
-            <Ionicons name="cube" size={38} color={colores.superficie} />
+            <Ionicons name="calendar" size={36} color={colores.superficie} />
           </View>
-          <Text style={estilos.nombre}>StockFacil</Text>
+          <Text style={estilos.nombre}>Mi Agenda</Text>
           <Text style={estilos.version}>Version 1.0</Text>
         </View>
 
         <View style={estilos.bloque}>
           <Text style={estilos.titulo}>Para que sirve</Text>
           <Text style={estilos.parrafo}>
-            Herramienta para que un negocio pequeno lleve el control de su inventario sin
-            depender de internet. Permite registrar productos, dar entradas y salidas de
-            mercancia, y saber en todo momento cuanto dinero hay invertido y que articulos
-            estan por agotarse.
+            Aplicacion para que un negocio de servicios, como una barberia, estetica o
+            consultorio, controle sus citas sin depender de internet. Permite agendar
+            evitando que dos citas se encimen, llevar el historial de cada cliente y saber
+            cuanto se factura por dia y que servicio deja mas.
           </Text>
         </View>
 
         <View style={estilos.bloque}>
           <Text style={estilos.titulo}>Funciona sin conexion</Text>
           <Text style={estilos.parrafo}>
-            Toda la informacion vive dentro del proyecto. Los productos iniciales se cargan
-            desde el archivo datos/productos.js y los cambios se manejan en memoria mientras
-            la aplicacion esta abierta. No hay base de datos ni peticiones a servidores.
+            Toda la informacion vive dentro del proyecto. Los clientes, servicios y citas
+            iniciales se cargan desde la carpeta datos y los cambios se manejan en memoria
+            mientras la aplicacion esta abierta. No hay base de datos ni peticiones a
+            servidores.
           </Text>
         </View>
 
@@ -98,11 +99,11 @@ const estilos = StyleSheet.create({
   },
   portada: {
     alignItems: 'center',
-    paddingVertical: 24,
+    paddingVertical: 22,
   },
   logo: {
-    width: 78,
-    height: 78,
+    width: 76,
+    height: 76,
     borderRadius: 24,
     backgroundColor: colores.primario,
     alignItems: 'center',

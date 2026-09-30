@@ -1,20 +1,21 @@
 export const colores = {
-  fondo: '#F1F5F9',
+  fondo: '#F6F7F9',
   superficie: '#FFFFFF',
-  primario: '#4F46E5',
-  primarioSuave: '#EEF2FF',
-  texto: '#0F172A',
-  textoSuave: '#64748B',
-  borde: '#E2E8F0',
-  exito: '#16A34A',
-  alerta: '#F59E0B',
+  primario: '#0D9488',
+  primarioSuave: '#CCFBF1',
+  acento: '#F97316',
+  texto: '#111827',
+  textoSuave: '#6B7280',
+  borde: '#E5E7EB',
+  exito: '#059669',
+  alerta: '#D97706',
   peligro: '#DC2626',
 };
 
 export const sombra = {
-  shadowColor: '#0F172A',
+  shadowColor: '#111827',
   shadowOffset: { width: 0, height: 2 },
-  shadowOpacity: 0.08,
+  shadowOpacity: 0.07,
   shadowRadius: 8,
   elevation: 3,
 };

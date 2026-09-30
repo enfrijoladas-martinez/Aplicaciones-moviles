@@ -11,7 +11,7 @@ export default function Contador({ valor, estilo, formato = 'entero' }) {
 
     Animated.timing(animado, {
       toValue: valor,
-      duration: 900,
+      duration: 850,
       useNativeDriver: false,
     }).start();
 

@@ -1,60 +1,61 @@
 import { useState } from 'react';
 import {
-  FlatList,
   Pressable,
   ScrollView,
+  SectionList,
   StyleSheet,
   Text,
   TextInput,
   View,
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
-import TarjetaProducto from '../componentes/TarjetaProducto';
-import ModalProducto from '../componentes/ModalProducto';
-import ModalDetalle from '../componentes/ModalDetalle';
-import { colores } from '../estilos/tema';
-import { categorias } from '../datos/productos';
+import TarjetaCita from '../componentes/TarjetaCita';
+import { colores, sombra } from '../estilos/tema';
+import { aMinutos, aTexto } from '../utilidades/fechas';
 
-export default function ProductosScreen({
-  productos,
-  alGuardarProducto,
-  alEliminarProducto,
-  alRegistrarMovimiento,
+const filtros = ['Todas', 'Pendiente', 'Completada', 'Cancelada'];
+
+export default function AgendaScreen({
+  citas,
+  clientes,
+  servicios,
+  alAbrirCita,
+  alAbrirFormulario,
 }) {
   const [busqueda, setBusqueda] = useState('');
   const [filtro, setFiltro] = useState('Todas');
-  const [detalle, setDetalle] = useState(null);
-  const [formulario, setFormulario] = useState(false);
-  const [editando, setEditando] = useState(null);
 
-  const visibles = productos.filter((p) => {
-    const coincideTexto = p.nombre.toLowerCase().includes(busqueda.toLowerCase());
-    const coincideCategoria = filtro === 'Todas' || p.categoria === filtro;
-    return coincideTexto && coincideCategoria;
+  const buscarCliente = (id) => clientes.find((c) => c.id === id);
+  const buscarServicio = (id) => servicios.find((s) => s.id === id);
+
+  const visibles = citas.filter((c) => {
+    const cliente = buscarCliente(c.clienteId);
+    const servicio = buscarServicio(c.servicioId);
+    if (!cliente || !servicio) return false;
+
+    const texto = busqueda.toLowerCase();
+    const coincide =
+      cliente.nombre.toLowerCase().includes(texto) ||
+      servicio.nombre.toLowerCase().includes(texto);
+
+    const coincideFiltro = filtro === 'Todas' || c.estado === filtro.toLowerCase();
+
+    return coincide && coincideFiltro;
   });
 
-  const guardar = (producto) => {
-    alGuardarProducto(producto);
-    setFormulario(false);
-    setEditando(null);
-    setDetalle(null);
-  };
+  const porFecha = {};
+  visibles.forEach((c) => {
+    if (!porFecha[c.fecha]) porFecha[c.fecha] = [];
+    porFecha[c.fecha].push(c);
+  });
 
-  const mover = (producto, tipo, cantidad) => {
-    alRegistrarMovimiento(producto, tipo, cantidad);
-    setDetalle(null);
-  };
-
-  const eliminar = (producto) => {
-    alEliminarProducto(producto);
-    setDetalle(null);
-  };
-
-  const editar = (producto) => {
-    setEditando(producto);
-    setDetalle(null);
-    setFormulario(true);
-  };
+  const secciones = Object.keys(porFecha)
+    .sort()
+    .reverse()
+    .map((fecha) => ({
+      title: aTexto(fecha),
+      data: porFecha[fecha].sort((a, b) => aMinutos(a.hora) - aMinutos(b.hora)),
+    }));
 
   return (
     <View style={estilos.pantalla}>
@@ -62,7 +63,7 @@ export default function ProductosScreen({
         <Ionicons name="search" size={18} color={colores.textoSuave} />
         <TextInput
           style={estilos.campo}
-          placeholder="Buscar producto..."
+          placeholder="Buscar cliente o servicio..."
           placeholderTextColor={colores.textoSuave}
           value={busqueda}
           onChangeText={setBusqueda}
@@ -80,61 +81,45 @@ export default function ProductosScreen({
         style={estilos.filtros}
         contentContainerStyle={estilos.filtrosContenido}
       >
-        {['Todas'].concat(categorias).map((c) => (
+        {filtros.map((f) => (
           <Pressable
-            key={c}
-            style={[estilos.ficha, filtro === c && estilos.fichaActiva]}
-            onPress={() => setFiltro(c)}
+            key={f}
+            style={[estilos.ficha, filtro === f && estilos.fichaActiva]}
+            onPress={() => setFiltro(f)}
           >
-            <Text style={[estilos.fichaTexto, filtro === c && estilos.fichaTextoActivo]}>{c}</Text>
+            <Text style={[estilos.fichaTexto, filtro === f && estilos.fichaTextoActivo]}>{f}</Text>
           </Pressable>
         ))}
       </ScrollView>
 
-      <FlatList
-        data={visibles}
+      <SectionList
+        sections={secciones}
         keyExtractor={(item) => item.id}
         contentContainerStyle={estilos.lista}
         showsVerticalScrollIndicator={false}
+        stickySectionHeadersEnabled={false}
+        renderSectionHeader={({ section }) => (
+          <Text style={estilos.encabezadoSeccion}>{section.title}</Text>
+        )}
         renderItem={({ item }) => (
-          <TarjetaProducto producto={item} alPresionar={setDetalle} />
+          <TarjetaCita
+            cita={item}
+            cliente={buscarCliente(item.clienteId)}
+            servicio={buscarServicio(item.servicioId)}
+            alPresionar={alAbrirCita}
+          />
         )}
         ListEmptyComponent={
           <View style={estilos.vacio}>
-            <Ionicons name="file-tray-outline" size={42} color={colores.borde} />
-            <Text style={estilos.vacioTexto}>No hay productos que coincidan</Text>
+            <Ionicons name="calendar-clear-outline" size={42} color={colores.borde} />
+            <Text style={estilos.vacioTexto}>No hay citas que coincidan</Text>
           </View>
         }
       />
 
-      <Pressable
-        style={estilos.flotante}
-        onPress={() => {
-          setEditando(null);
-          setFormulario(true);
-        }}
-      >
+      <Pressable style={estilos.flotante} onPress={alAbrirFormulario}>
         <Ionicons name="add" size={28} color={colores.superficie} />
       </Pressable>
-
-      <ModalDetalle
-        visible={detalle !== null}
-        producto={detalle}
-        alMover={mover}
-        alEditar={editar}
-        alEliminar={eliminar}
-        alCerrar={() => setDetalle(null)}
-      />
-
-      <ModalProducto
-        visible={formulario}
-        producto={editando}
-        alGuardar={guardar}
-        alCerrar={() => {
-          setFormulario(false);
-          setEditando(null);
-        }}
-      />
     </View>
   );
 }
@@ -193,8 +178,16 @@ const estilos = StyleSheet.create({
   },
   lista: {
     paddingHorizontal: 16,
-    paddingTop: 6,
+    paddingTop: 4,
     paddingBottom: 90,
+  },
+  encabezadoSeccion: {
+    fontSize: 13,
+    fontWeight: 'bold',
+    color: colores.textoSuave,
+    textTransform: 'uppercase',
+    marginTop: 12,
+    marginBottom: 8,
   },
   vacio: {
     alignItems: 'center',

@@ -4,45 +4,41 @@ import { Ionicons } from '@expo/vector-icons';
 import { colores } from '../estilos/tema';
 
 export default function SplashScreen({ alTerminar }) {
-  const escala = useRef(new Animated.Value(0.4)).current;
+  const escala = useRef(new Animated.Value(0.3)).current;
   const opacidad = useRef(new Animated.Value(0)).current;
-  const subida = useRef(new Animated.Value(25)).current;
-  const giro = useRef(new Animated.Value(0)).current;
+  const subida = useRef(new Animated.Value(28)).current;
+  const pulso = useRef(new Animated.Value(1)).current;
 
   useEffect(() => {
     Animated.sequence([
       Animated.parallel([
-        Animated.spring(escala, { toValue: 1, friction: 4, tension: 60, useNativeDriver: true }),
-        Animated.timing(opacidad, { toValue: 1, duration: 600, useNativeDriver: true }),
+        Animated.spring(escala, { toValue: 1, friction: 5, tension: 70, useNativeDriver: true }),
+        Animated.timing(opacidad, { toValue: 1, duration: 550, useNativeDriver: true }),
       ]),
-      Animated.parallel([
-        Animated.timing(subida, { toValue: 0, duration: 450, useNativeDriver: true }),
-        Animated.timing(giro, { toValue: 1, duration: 900, useNativeDriver: true }),
+      Animated.timing(subida, { toValue: 0, duration: 420, useNativeDriver: true }),
+      Animated.sequence([
+        Animated.timing(pulso, { toValue: 1.12, duration: 320, useNativeDriver: true }),
+        Animated.timing(pulso, { toValue: 1, duration: 320, useNativeDriver: true }),
       ]),
-      Animated.delay(700),
-      Animated.timing(opacidad, { toValue: 0, duration: 400, useNativeDriver: true }),
+      Animated.delay(550),
+      Animated.timing(opacidad, { toValue: 0, duration: 380, useNativeDriver: true }),
     ]).start(() => alTerminar());
   }, []);
-
-  const rotacion = giro.interpolate({
-    inputRange: [0, 1],
-    outputRange: ['0deg', '360deg'],
-  });
 
   return (
     <View style={estilos.contenedor}>
       <Animated.View
         style={[
           estilos.circulo,
-          { opacity: opacidad, transform: [{ scale: escala }, { rotate: rotacion }] },
+          { opacity: opacidad, transform: [{ scale: Animated.multiply(escala, pulso) }] },
         ]}
       >
-        <Ionicons name="cube" size={64} color={colores.superficie} />
+        <Ionicons name="calendar" size={60} color={colores.superficie} />
       </Animated.View>
 
       <Animated.View style={{ opacity: opacidad, transform: [{ translateY: subida }] }}>
-        <Text style={estilos.titulo}>StockFacil</Text>
-        <Text style={estilos.lema}>Control de inventario</Text>
+        <Text style={estilos.titulo}>Mi Agenda</Text>
+        <Text style={estilos.lema}>Control de citas y clientes</Text>
       </Animated.View>
 
       <Animated.Text style={[estilos.pie, { opacity: opacidad }]}>
@@ -60,24 +56,24 @@ const estilos = StyleSheet.create({
     justifyContent: 'center',
   },
   circulo: {
-    width: 130,
-    height: 130,
-    borderRadius: 65,
+    width: 126,
+    height: 126,
+    borderRadius: 63,
     backgroundColor: 'rgba(255, 255, 255, 0.18)',
     alignItems: 'center',
     justifyContent: 'center',
-    marginBottom: 28,
+    marginBottom: 26,
   },
   titulo: {
     color: colores.superficie,
-    fontSize: 38,
+    fontSize: 36,
     fontWeight: 'bold',
     letterSpacing: 1,
     textAlign: 'center',
   },
   lema: {
-    color: 'rgba(255, 255, 255, 0.8)',
-    fontSize: 16,
+    color: 'rgba(255, 255, 255, 0.82)',
+    fontSize: 15,
     textAlign: 'center',
     marginTop: 6,
   },
