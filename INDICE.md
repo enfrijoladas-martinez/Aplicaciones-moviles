@@ -29,7 +29,7 @@ Cada carpeta es un proyecto independiente con su propio `package.json`.
 | 12 | [Ejercicio_12](./Ejercicio_12) | Mapas | `react-native-maps`, `expo-location` |
 | 13 | [Ejercicio_13](./Ejercicio_13) | Consumo de API con MongoDB | `express`, `mongodb`, `bcryptjs` |
 | — | [FitCalc](./FitCalc) | Calculadora de IMC con modal | — |
-| — | [Proyecto Parcial](./Proyecto%20Parcial) | **Proyecto final:** agenda de citas | `@react-navigation/drawer`, `Animated` |
+| — | [Proyecto Parcial](./Proyecto%20Parcial) | **Proyecto final:** optimizador de rutas de entrega | `@react-navigation/drawer`, `expo-location` |
 
 ---
 
@@ -118,21 +118,29 @@ Instrucciones completas en su [README](./Ejercicio_13/ConsumeAPI_MongoDB/README.
 Captura peso y altura, valida la entrada y muestra el resultado en un modal que
 clasifica por color: bajo peso, normal, sobrepeso u obesidad.
 
-### [Proyecto Parcial](./Proyecto%20Parcial) — Agenda de citas Barber
+### [Proyecto Parcial](./Proyecto%20Parcial) — Rutas de Entrega
 
-Proyecto final de la materia. Aplicacion para que una barberia, estetica o consultorio
-controle sus citas sin depender de internet.
+Proyecto final de la materia. Calcula el orden en que una empresa de reparto debe visitar
+a sus clientes para recorrer la menor distancia posible, y traduce ese ahorro a pesos.
 
-- `pantallas/SplashScreen.js` — pantalla de bienvenida animada con `spring` y `sequence`
-- `pantallas/HoyScreen.js` — ingreso del dia, ocupacion de la jornada y siguiente cita
-- `pantallas/AgendaScreen.js` — todas las citas en `SectionList` agrupadas por dia
-- `pantallas/ClientesScreen.js` — historial, ticket promedio y servicio frecuente
-- `pantallas/ServiciosScreen.js` — catalogo con ranking de los mas solicitados
-- `componentes/` — tarjetas, modales, contador animado y barra de avance
-- `datos/` — clientes, servicios y citas iniciales, todo local
+Es el **problema del agente viajero**, resuelto con dos heuristicas:
 
-Al agendar, las horas que se traslapan con otra cita aparecen tachadas y no se pueden
-elegir. El calculo considera la duracion del servicio seleccionado.
+1. **Vecino mas cercano** arma una primera ruta yendo siempre al punto mas proximo
+2. **2-opt** revisa pares de tramos y los invierte cuando eso acorta el recorrido,
+   deshaciendo los cruces que dejo el primer metodo
+
+Las distancias son reales: se calculan con la **formula de Haversine** sobre coordenadas
+de latitud y longitud, tomando en cuenta la curvatura de la Tierra.
+
+- `utilidades/geo.js` — Haversine, proyeccion de coordenadas a pantalla y deteccion de cruces
+- `utilidades/ruta.js` — vecino mas cercano, 2-opt, reparto por capacidad y metricas
+- `componentes/Lienzo.js` — el plano, dibujado con Views rotadas sin libreria de graficos
+- `pantallas/RutaScreen.js` — optimizacion, reproduccion paso a paso y simulacion del recorrido
+- `pantallas/ComparativaScreen.js` — los tres metodos comparados y proyeccion de ahorro
+- `pantallas/AjustesScreen.js` — datos del vehiculo y GPS para ubicar el almacen
+
+Funciona sin internet. El unico acceso a hardware es el GPS con `expo-location`, que no
+hace peticiones a ningun servidor.
 
 ---
 

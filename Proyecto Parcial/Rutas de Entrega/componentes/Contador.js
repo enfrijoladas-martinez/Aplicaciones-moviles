@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Animated, Text } from 'react-native';
 import { moneda } from '../estilos/tema';
 
-export default function Contador({ valor, estilo, formato = 'entero' }) {
+export default function Contador({ valor, estilo, formato = 'entero', decimales = 2 }) {
   const animado = useRef(new Animated.Value(0)).current;
   const [mostrado, setMostrado] = useState(0);
 
@@ -18,7 +18,9 @@ export default function Contador({ valor, estilo, formato = 'entero' }) {
     return () => animado.removeListener(suscripcion);
   }, [valor]);
 
-  const texto = formato === 'moneda' ? moneda(mostrado) : String(Math.round(mostrado));
+  let texto = String(Math.round(mostrado));
+  if (formato === 'moneda') texto = moneda(mostrado);
+  if (formato === 'decimal') texto = mostrado.toFixed(decimales);
 
   return <Text style={estilo}>{texto}</Text>;
 }

@@ -22,7 +22,7 @@ El indice completo de los proyectos, con el detalle de cada uno, esta en
 | `Ejercicio_04/` | Modal personalizado |
 | `Ejercicio_08/` | `FlatList` de materias con modal de detalle |
 | `FitCalc/` | Calculadora de IMC con modal de resultado |
-| `Proyecto Parcial/` | Proyecto final: agenda de citas para barberia |
+| `Proyecto Parcial/` | Proyecto final: optimizador de rutas de entrega |
 | `Ejercicio_05/` | Navegacion con Stack (IMC, divisas, propina) |
 | `Ejercicio_06/` | Navegacion con Tabs (Inicio, Buscar, Perfil) |
 | `Ejercicio_07/` | Navegacion con Drawer (Inicio, Buscar, Perfil, Ajustes) |

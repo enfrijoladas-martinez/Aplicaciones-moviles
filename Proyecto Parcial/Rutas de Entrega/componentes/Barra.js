@@ -2,7 +2,7 @@ import { useEffect, useRef } from 'react';
 import { Animated, StyleSheet, View } from 'react-native';
 import { colores } from '../estilos/tema';
 
-export default function Barra({ proporcion, color }) {
+export default function Barra({ proporcion, color, grosor = 9 }) {
   const ancho = useRef(new Animated.Value(0)).current;
 
   useEffect(() => {
@@ -19,21 +19,21 @@ export default function Barra({ proporcion, color }) {
   });
 
   return (
-    <View style={estilos.canal}>
-      <Animated.View style={[estilos.relleno, { width: relleno, backgroundColor: color }]} />
+    <View style={[estilos.canal, { height: grosor, borderRadius: grosor / 2 }]}>
+      <Animated.View
+        style={[
+          estilos.relleno,
+          { width: relleno, backgroundColor: color, height: grosor, borderRadius: grosor / 2 },
+        ]}
+      />
     </View>
   );
 }
 
 const estilos = StyleSheet.create({
   canal: {
-    height: 8,
-    borderRadius: 4,
     backgroundColor: colores.borde,
     overflow: 'hidden',
   },
-  relleno: {
-    height: 8,
-    borderRadius: 4,
-  },
+  relleno: {},
 });
