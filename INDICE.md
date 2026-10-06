@@ -120,8 +120,20 @@ clasifica por color: bajo peso, normal, sobrepeso u obesidad.
 
 ### [Proyecto Parcial](./Proyecto%20Parcial) — Rutas de Entrega
 
-Proyecto final de la materia. Calcula el orden en que una empresa de reparto debe visitar
-a sus clientes para recorrer la menor distancia posible, y traduce ese ahorro a pesos.
+Proyecto final de la materia. Aplicacion para el repartidor de una empresa de paqueteria:
+calcula en que orden conviene visitar las direcciones para recorrer la menor distancia
+posible, y traduce ese ahorro a pesos.
+
+## Flujo de la aplicacion
+
+1. **Inicio de sesion** con usuario y contrasena (cuenta de prueba: `emartinez` / `1234`)
+2. **Seleccion de central**, viendo cuantos paquetes tiene cada una, su peso y sus zonas
+3. **Seleccion de paquetes**: filtro por zona, buscador por guia o cliente, y boton de
+   seleccionar todo que respeta el filtro activo
+4. **Confirmar carga** y pasar a la ruta
+5. **Optimizar** y ver el ahorro en kilometros, tiempo y dinero
+
+## El algoritmo
 
 Es el **problema del agente viajero**, resuelto con dos heuristicas:
 
@@ -132,15 +144,30 @@ Es el **problema del agente viajero**, resuelto con dos heuristicas:
 Las distancias son reales: se calculan con la **formula de Haversine** sobre coordenadas
 de latitud y longitud, tomando en cuenta la curvatura de la Tierra.
 
+## Estructura
+
 - `utilidades/geo.js` — Haversine, proyeccion de coordenadas a pantalla y deteccion de cruces
 - `utilidades/ruta.js` — vecino mas cercano, 2-opt, reparto por capacidad y metricas
 - `componentes/Lienzo.js` — el plano, dibujado con Views rotadas sin libreria de graficos
+- `componentes/MenuLateral.js` — drawer propio con la sesion y la central activa
+- `pantallas/LoginScreen.js` — acceso con validacion local
+- `pantallas/SucursalesScreen.js` — eleccion de la central donde se carga
+- `pantallas/CargaScreen.js` — seleccion de paquetes por zona y confirmacion
 - `pantallas/RutaScreen.js` — optimizacion, reproduccion paso a paso y simulacion del recorrido
 - `pantallas/ComparativaScreen.js` — los tres metodos comparados y proyeccion de ahorro
 - `pantallas/AjustesScreen.js` — datos del vehiculo y GPS para ubicar el almacen
+- `datos/` — usuarios, sucursales y 22 paquetes con coordenadas reales de Veracruz
 
 Funciona sin internet. El unico acceso a hardware es el GPS con `expo-location`, que no
 hace peticiones a ningun servidor.
+
+## Como correrlo
+
+```bash
+cd "Proyecto Parcial/Rutas de Entrega"
+npm install
+npx expo start
+```
 
 ---
 
