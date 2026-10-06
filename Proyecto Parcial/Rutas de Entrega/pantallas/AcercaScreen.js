@@ -5,7 +5,8 @@ import { colores, sombra } from '../estilos/tema';
 
 const temas = [
   { icono: 'phone-portrait-outline', titulo: 'Splash Screen', detalle: 'Animated con spring, sequence y barra de progreso' },
-  { icono: 'menu-outline', titulo: 'Navegacion Drawer', detalle: 'createDrawerNavigator con cinco pantallas' },
+  { icono: 'menu-outline', titulo: 'Navegacion Drawer', detalle: 'Drawer con menu lateral propio y sesion activa' },
+  { icono: 'log-in-outline', titulo: 'Inicio de sesion', detalle: 'Validacion local de usuario y seleccion de central' },
   { icono: 'albums-outline', titulo: 'Modales', detalle: 'Alta de entregas y resultado de la optimizacion' },
   { icono: 'pulse-outline', titulo: 'Animaciones', detalle: 'Trazado de ruta, camion en movimiento y contadores' },
   { icono: 'list-outline', titulo: 'Listas', detalle: 'FlatList con buscador y ordenamiento por distancia' },
@@ -37,7 +38,8 @@ export default function AcercaScreen() {
         <View style={estilos.bloque}>
           <Text style={estilos.titulo}>Que resuelve</Text>
           <Text style={estilos.parrafo}>
-            Una empresa de reparto tiene varios clientes que visitar en el dia. El orden en
+            El repartidor inicia sesion, elige en que central carga, selecciona de la lista que
+            direcciones se lleva en el viaje y confirma. El orden en
             que los visita cambia por completo cuanto maneja, cuanto tarda y cuanta gasolina
             gasta. Esta aplicacion calcula el orden que menos kilometros recorre y traduce
             ese ahorro a pesos.

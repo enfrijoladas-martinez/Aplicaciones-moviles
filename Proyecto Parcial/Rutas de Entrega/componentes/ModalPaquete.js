@@ -11,16 +11,26 @@ import {
 } from 'react-native';
 import { Ionicons } from '@expo/vector-icons';
 import { colores } from '../estilos/tema';
+import { coloresZona, zonas } from '../datos/paquetes';
 
 const prioridades = ['baja', 'normal', 'alta'];
 
-export default function ModalEntrega({ visible, entrega, sugerencia, alGuardar, alEliminar, alCerrar }) {
-  const [nombre, setNombre] = useState('');
+export default function ModalPaquete({
+  visible,
+  entrega,
+  sucursal,
+  sugerencia,
+  alGuardar,
+  alEliminar,
+  alCerrar,
+}) {
+  const [destinatario, setDestinatario] = useState('');
   const [direccion, setDireccion] = useState('');
   const [peso, setPeso] = useState('');
+  const [zona, setZona] = useState(zonas[0]);
+  const [prioridad, setPrioridad] = useState('normal');
   const [lat, setLat] = useState('');
   const [lon, setLon] = useState('');
-  const [prioridad, setPrioridad] = useState('normal');
   const [editarCoordenadas, setEditarCoordenadas] = useState(false);
   const [aviso, setAviso] = useState('');
 
@@ -28,19 +38,22 @@ export default function ModalEntrega({ visible, entrega, sugerencia, alGuardar, 
     if (!visible) return;
 
     if (entrega) {
-      setNombre(entrega.nombre);
+      setDestinatario(entrega.destinatario);
       setDireccion(entrega.direccion);
       setPeso(String(entrega.peso));
+      setZona(entrega.zona);
+      setPrioridad(entrega.prioridad);
       setLat(String(entrega.lat));
       setLon(String(entrega.lon));
-      setPrioridad(entrega.prioridad || 'normal');
     } else {
-      setNombre('');
+      const base = sugerencia || sucursal;
+      setDestinatario('');
       setDireccion('');
       setPeso('');
-      setLat(sugerencia ? sugerencia.lat.toFixed(6) : '');
-      setLon(sugerencia ? sugerencia.lon.toFixed(6) : '');
+      setZona(zonas[0]);
       setPrioridad('normal');
+      setLat(base ? String(base.lat.toFixed(6)) : '');
+      setLon(base ? String(base.lon.toFixed(6)) : '');
     }
 
     setEditarCoordenadas(false);
@@ -52,13 +65,13 @@ export default function ModalEntrega({ visible, entrega, sugerencia, alGuardar, 
     const la = parseFloat(lat);
     const lo = parseFloat(lon);
 
-    if (!nombre.trim()) {
-      setAviso('Escribe el nombre del cliente');
+    if (!destinatario.trim()) {
+      setAviso('Escribe el nombre del destinatario');
       return;
     }
 
-    if (isNaN(p) || p < 0) {
-      setAviso('El peso debe ser un numero valido');
+    if (isNaN(p) || p <= 0) {
+      setAviso('El peso debe ser mayor a cero');
       return;
     }
 
@@ -68,13 +81,16 @@ export default function ModalEntrega({ visible, entrega, sugerencia, alGuardar, 
     }
 
     alGuardar({
-      id: entrega ? entrega.id : 'e' + Date.now(),
-      nombre: nombre.trim(),
+      id: entrega ? entrega.id : 'p' + Date.now(),
+      sucursalId: entrega ? entrega.sucursalId : sucursal.id,
+      guia: entrega ? entrega.guia : 'MN-' + String(Date.now()).slice(-5),
+      destinatario: destinatario.trim(),
       direccion: direccion.trim() || 'Sin direccion',
+      zona: zona,
       peso: p,
+      prioridad: prioridad,
       lat: la,
       lon: lo,
-      prioridad: prioridad,
     });
   };
 
@@ -84,16 +100,17 @@ export default function ModalEntrega({ visible, entrega, sugerencia, alGuardar, 
         <View style={estilos.hoja}>
           <View style={estilos.barra} />
 
-          <Text style={estilos.titulo}>{entrega ? 'Editar entrega' : 'Nueva entrega'}</Text>
+          <Text style={estilos.titulo}>{entrega ? 'Editar paquete' : 'Nuevo paquete'}</Text>
+          {entrega && <Text style={estilos.guia}>Guia {entrega.guia}</Text>}
 
           <ScrollView showsVerticalScrollIndicator={false}>
-            <Text style={estilos.etiqueta}>Cliente</Text>
+            <Text style={estilos.etiqueta}>Destinatario</Text>
             <TextInput
               style={estilos.campo}
               placeholder="Ej. Abarrotes La Esquina"
               placeholderTextColor={colores.textoSuave}
-              value={nombre}
-              onChangeText={setNombre}
+              value={destinatario}
+              onChangeText={setDestinatario}
             />
 
             <Text style={estilos.etiqueta}>Direccion</Text>
@@ -105,7 +122,7 @@ export default function ModalEntrega({ visible, entrega, sugerencia, alGuardar, 
               onChangeText={setDireccion}
             />
 
-            <Text style={estilos.etiqueta}>Peso del paquete en kg</Text>
+            <Text style={estilos.etiqueta}>Peso en kg</Text>
             <TextInput
               style={estilos.campo}
               keyboardType="numeric"
@@ -114,6 +131,24 @@ export default function ModalEntrega({ visible, entrega, sugerencia, alGuardar, 
               value={peso}
               onChangeText={setPeso}
             />
+
+            <Text style={estilos.etiqueta}>Zona</Text>
+            <View style={estilos.fichas}>
+              {zonas.map((z) => (
+                <Pressable
+                  key={z}
+                  style={[
+                    estilos.ficha,
+                    zona === z && { backgroundColor: coloresZona[z], borderColor: coloresZona[z] },
+                  ]}
+                  onPress={() => setZona(z)}
+                >
+                  <Text style={[estilos.fichaTexto, zona === z && estilos.fichaTextoActivo]}>
+                    {z}
+                  </Text>
+                </Pressable>
+              ))}
+            </View>
 
             <Text style={estilos.etiqueta}>Prioridad</Text>
             <View style={estilos.fichas}>
@@ -220,13 +255,18 @@ const estilos = StyleSheet.create({
     fontSize: 21,
     fontWeight: 'bold',
     color: colores.texto,
-    marginBottom: 10,
+  },
+  guia: {
+    fontSize: 12,
+    color: colores.textoSuave,
+    marginTop: 2,
+    marginBottom: 6,
   },
   etiqueta: {
     fontSize: 13,
     fontWeight: '600',
     color: colores.textoSuave,
-    marginTop: 10,
+    marginTop: 12,
     marginBottom: 6,
   },
   campo: {
@@ -241,15 +281,17 @@ const estilos = StyleSheet.create({
   },
   fichas: {
     flexDirection: 'row',
+    flexWrap: 'wrap',
   },
   ficha: {
-    paddingHorizontal: 16,
-    paddingVertical: 8,
+    paddingHorizontal: 13,
+    paddingVertical: 7,
     borderRadius: 20,
     backgroundColor: colores.fondo,
     borderWidth: 1,
     borderColor: colores.borde,
-    marginRight: 8,
+    marginRight: 7,
+    marginBottom: 7,
   },
   fichaActiva: {
     backgroundColor: colores.primario,
@@ -270,7 +312,7 @@ const estilos = StyleSheet.create({
     borderRadius: 10,
     paddingVertical: 10,
     paddingHorizontal: 12,
-    marginTop: 14,
+    marginTop: 12,
   },
   ubicacionTexto: {
     fontSize: 13,

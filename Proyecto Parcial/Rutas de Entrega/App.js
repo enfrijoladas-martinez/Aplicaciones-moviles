@@ -7,59 +7,120 @@ import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 
 import SplashScreen from './pantallas/SplashScreen';
+import LoginScreen from './pantallas/LoginScreen';
+import SucursalesScreen from './pantallas/SucursalesScreen';
+import CargaScreen from './pantallas/CargaScreen';
 import RutaScreen from './pantallas/RutaScreen';
-import EntregasScreen from './pantallas/EntregasScreen';
 import ComparativaScreen from './pantallas/ComparativaScreen';
 import AjustesScreen from './pantallas/AjustesScreen';
 import AcercaScreen from './pantallas/AcercaScreen';
 
-import ModalEntrega from './componentes/ModalEntrega';
+import MenuLateral from './componentes/MenuLateral';
+import ModalPaquete from './componentes/ModalPaquete';
 
-import { almacenInicial, entregasIniciales, ajustesIniciales } from './datos/entregas';
+import { paquetesIniciales } from './datos/paquetes';
+import { ajustesIniciales } from './datos/ajustes';
 import { colores } from './estilos/tema';
 
 const Drawer = createDrawerNavigator();
 
 export default function App() {
   const [listo, setListo] = useState(false);
-  const [almacen, setAlmacen] = useState(almacenInicial);
-  const [entregas, setEntregas] = useState(entregasIniciales);
+  const [usuario, setUsuario] = useState(null);
+  const [sucursal, setSucursal] = useState(null);
+  const [paquetes, setPaquetes] = useState(paquetesIniciales);
+  const [seleccionados, setSeleccionados] = useState([]);
   const [ajustes, setAjustes] = useState(ajustesIniciales);
-  const [sugerencia, setSugerencia] = useState(null);
+  const [puntoNuevo, setPuntoNuevo] = useState(null);
 
-  const guardarEntrega = (entrega) => {
-    const existe = entregas.some((e) => e.id === entrega.id);
+  const cerrarSesion = () => {
+    setUsuario(null);
+    setSucursal(null);
+    setSeleccionados([]);
+  };
 
-    if (existe) {
-      setEntregas(entregas.map((e) => (e.id === entrega.id ? entrega : e)));
+  const cambiarSucursal = () => {
+    setSucursal(null);
+    setSeleccionados([]);
+  };
+
+  const alternar = (id) => {
+    if (seleccionados.indexOf(id) !== -1) {
+      setSeleccionados(seleccionados.filter((x) => x !== id));
     } else {
-      setEntregas(entregas.concat([entrega]));
+      setSeleccionados(seleccionados.concat([id]));
     }
   };
 
-  const eliminarEntrega = (entrega) => {
-    setEntregas(entregas.filter((e) => e.id !== entrega.id));
+  const seleccionarVarios = (ids, marcar) => {
+    if (marcar) {
+      const nuevos = ids.filter((id) => seleccionados.indexOf(id) === -1);
+      setSeleccionados(seleccionados.concat(nuevos));
+    } else {
+      setSeleccionados(seleccionados.filter((id) => ids.indexOf(id) === -1));
+    }
   };
 
-  const moverAlmacen = (coords) => {
-    setAlmacen({
-      ...almacen,
-      nombre: 'Mi ubicacion actual',
-      direccion: 'Tomada del GPS',
-      lat: coords.lat,
-      lon: coords.lon,
-    });
+  const guardarPaquete = (paquete) => {
+    const existe = paquetes.some((p) => p.id === paquete.id);
+
+    if (existe) {
+      setPaquetes(paquetes.map((p) => (p.id === paquete.id ? paquete : p)));
+    } else {
+      setPaquetes(paquetes.concat([paquete]));
+      setSeleccionados(seleccionados.concat([paquete.id]));
+    }
+  };
+
+  const eliminarPaquete = (paquete) => {
+    setPaquetes(paquetes.filter((p) => p.id !== paquete.id));
+    setSeleccionados(seleccionados.filter((id) => id !== paquete.id));
   };
 
   if (!listo) {
     return <SplashScreen alTerminar={() => setListo(true)} />;
   }
 
+  if (!usuario) {
+    return <LoginScreen alEntrar={setUsuario} />;
+  }
+
+  if (!sucursal) {
+    return (
+      <SucursalesScreen
+        usuario={usuario}
+        paquetes={paquetes}
+        alElegir={setSucursal}
+        alSalir={cerrarSesion}
+      />
+    );
+  }
+
+  const almacen = {
+    ...sucursal,
+    id: 'almacen',
+    destinatario: sucursal.nombre,
+    peso: 0,
+  };
+
+  const deLaSucursal = paquetes.filter((p) => p.sucursalId === sucursal.id);
+  const cargados = paquetes.filter((p) => seleccionados.indexOf(p.id) !== -1);
+
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       <NavigationContainer>
         <Drawer.Navigator
-          initialRouteName="Ruta"
+          initialRouteName="Carga"
+          drawerContent={(props) => (
+            <MenuLateral
+              {...props}
+              usuario={usuario}
+              sucursal={sucursal}
+              seleccionados={cargados.length}
+              alCambiarSucursal={cambiarSucursal}
+              alSalir={cerrarSesion}
+            />
+          )}
           screenOptions={{
             headerStyle: { backgroundColor: colores.primario },
             headerTintColor: '#FFFFFF',
@@ -71,8 +132,34 @@ export default function App() {
           }}
         >
           <Drawer.Screen
+            name="Carga"
+            options={{
+              title: 'Paquetes por entregar',
+              drawerIcon: ({ color }) => (
+                <Ionicons name="cube-outline" size={20} color={color} />
+              ),
+            }}
+          >
+            {(props) => (
+              <CargaScreen
+                {...props}
+                sucursal={almacen}
+                paquetes={deLaSucursal}
+                seleccionados={seleccionados}
+                ajustes={ajustes}
+                alAlternar={alternar}
+                alSeleccionarVarios={seleccionarVarios}
+                alGuardarPaquete={guardarPaquete}
+                alEliminarPaquete={eliminarPaquete}
+                alConfirmar={() => {}}
+              />
+            )}
+          </Drawer.Screen>
+
+          <Drawer.Screen
             name="Ruta"
             options={{
+              title: 'Ruta optimizada',
               drawerIcon: ({ color }) => (
                 <Ionicons name="map-outline" size={20} color={color} />
               ),
@@ -82,30 +169,9 @@ export default function App() {
               <RutaScreen
                 {...props}
                 almacen={almacen}
-                entregas={entregas}
+                entregas={cargados}
                 ajustes={ajustes}
-                alAgregarEnPunto={(coords) => {
-                  setSugerencia(coords);
-                }}
-              />
-            )}
-          </Drawer.Screen>
-
-          <Drawer.Screen
-            name="Entregas"
-            options={{
-              drawerIcon: ({ color }) => (
-                <Ionicons name="cube-outline" size={20} color={color} />
-              ),
-            }}
-          >
-            {(props) => (
-              <EntregasScreen
-                {...props}
-                almacen={almacen}
-                entregas={entregas}
-                alGuardarEntrega={guardarEntrega}
-                alEliminarEntrega={eliminarEntrega}
+                alAgregarEnPunto={setPuntoNuevo}
               />
             )}
           </Drawer.Screen>
@@ -122,7 +188,7 @@ export default function App() {
               <ComparativaScreen
                 {...props}
                 almacen={almacen}
-                entregas={entregas}
+                entregas={cargados}
                 ajustes={ajustes}
               />
             )}
@@ -142,7 +208,15 @@ export default function App() {
                 almacen={almacen}
                 ajustes={ajustes}
                 alCambiarAjustes={setAjustes}
-                alMoverAlmacen={moverAlmacen}
+                alMoverAlmacen={(coords) =>
+                  setSucursal({
+                    ...sucursal,
+                    nombre: 'Mi ubicacion actual',
+                    direccion: 'Tomada del GPS',
+                    lat: coords.lat,
+                    lon: coords.lon,
+                  })
+                }
               />
             )}
           </Drawer.Screen>
@@ -159,16 +233,17 @@ export default function App() {
         </Drawer.Navigator>
       </NavigationContainer>
 
-      <ModalEntrega
-        visible={sugerencia !== null}
+      <ModalPaquete
+        visible={puntoNuevo !== null}
         entrega={null}
-        sugerencia={sugerencia}
-        alGuardar={(entrega) => {
-          guardarEntrega(entrega);
-          setSugerencia(null);
+        sucursal={sucursal}
+        sugerencia={puntoNuevo}
+        alGuardar={(paquete) => {
+          guardarPaquete(paquete);
+          setPuntoNuevo(null);
         }}
-        alEliminar={() => setSugerencia(null)}
-        alCerrar={() => setSugerencia(null)}
+        alEliminar={() => setPuntoNuevo(null)}
+        alCerrar={() => setPuntoNuevo(null)}
       />
 
       <StatusBar style="light" />

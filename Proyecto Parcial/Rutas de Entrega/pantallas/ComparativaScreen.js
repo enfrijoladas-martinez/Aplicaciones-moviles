@@ -25,9 +25,9 @@ export default function ComparativaScreen({ almacen, entregas, ajustes }) {
     return (
       <View style={estilos.centrado}>
         <Ionicons name="analytics-outline" size={46} color={colores.borde} />
-        <Text style={estilos.vacioTitulo}>Faltan entregas</Text>
+        <Text style={estilos.vacioTitulo}>No hay carga confirmada</Text>
         <Text style={estilos.vacioTexto}>
-          Agrega al menos dos entregas para poder comparar rutas.
+          Selecciona al menos dos paquetes en la pantalla de Carga para comparar rutas.
         </Text>
       </View>
     );
@@ -111,7 +111,7 @@ export default function ComparativaScreen({ almacen, entregas, ajustes }) {
         <Text style={estilos.seccion}>Datos del reparto</Text>
 
         <View style={estilos.bloque}>
-          <Renglon etiqueta="Paradas" valor={String(entregas.length)} />
+          <Renglon etiqueta="Paquetes cargados" valor={String(entregas.length)} />
           <Renglon etiqueta="Carga total" valor={entregas.reduce((s, e) => s + e.peso, 0) + ' kg'} />
           <Renglon etiqueta="Viajes necesarios" valor={String(viajes.length)} />
           <Renglon etiqueta="Distancia final" valor={dFinal.toFixed(2) + ' km'} />
@@ -119,7 +119,7 @@ export default function ComparativaScreen({ almacen, entregas, ajustes }) {
           <Renglon etiqueta="Combustible" valor={mFinal.litros.toFixed(2) + ' L'} />
           <Renglon
             etiqueta="Entrega mas lejana"
-            valor={masLejana.nombre + ' (' + masLejana.d.toFixed(1) + ' km)'}
+            valor={masLejana.destinatario + ' (' + masLejana.d.toFixed(1) + ' km)'}
           />
           <Renglon etiqueta="Mejoras del 2-opt" valor={String(r.pasos.length - 1)} />
         </View>
