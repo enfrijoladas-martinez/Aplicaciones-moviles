@@ -113,6 +113,14 @@ export default function AjustesScreen({ almacen, ajustes, alCambiarAjustes, alMo
           alCambiar={(t) => cambiarNumero('precioLitro', t)}
           ayuda="Se usa para calcular el costo del viaje"
         />
+
+        <Campo
+          etiqueta="Tiempo por entrega"
+          sufijo="minutos"
+          valor={ajustes.minutosPorEntrega}
+          alCambiar={(t) => cambiarNumero('minutosPorEntrega', t)}
+          ayuda="Lo que tardas bajando el paquete y recabando la firma"
+        />
       </View>
 
       <Text style={estilos.seccion}>Capacidad de carga</Text>

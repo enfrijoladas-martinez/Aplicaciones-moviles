@@ -4,4 +4,5 @@ export const ajustesIniciales = {
   precioLitro: 24.5,
   capacidad: 350,
   usarCapacidad: false,
+  minutosPorEntrega: 6,
 };

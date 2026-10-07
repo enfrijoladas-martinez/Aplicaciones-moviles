@@ -16,6 +16,7 @@ export default function Lienzo({
   camion,
   visitadas,
   alTocar,
+  alTocarPunto,
 }) {
   const rejilla = [];
 
@@ -85,16 +86,19 @@ export default function Lienzo({
         const numero = posicionEnRuta[p.id];
 
         return (
-          <View
+          <Pressable
             key={p.id}
+            onPress={() => {
+              if (alTocarPunto) alTocarPunto(p);
+            }}
             style={[
               estilos.marcador,
               {
-                left: p.x - (esAlmacen ? 15 : 12),
-                top: p.y - (esAlmacen ? 15 : 12),
-                width: esAlmacen ? 30 : 24,
-                height: esAlmacen ? 30 : 24,
-                borderRadius: esAlmacen ? 9 : 12,
+                left: p.x - (esAlmacen ? 18 : 16),
+                top: p.y - (esAlmacen ? 18 : 16),
+                width: esAlmacen ? 36 : 32,
+                height: esAlmacen ? 36 : 32,
+                borderRadius: esAlmacen ? 11 : 16,
                 backgroundColor: esAlmacen
                   ? colores.almacen
                   : entregada
@@ -104,13 +108,13 @@ export default function Lienzo({
             ]}
           >
             {esAlmacen ? (
-              <Ionicons name="business" size={16} color="#FFFFFF" />
+              <Ionicons name="business" size={17} color="#FFFFFF" />
             ) : entregada ? (
-              <Ionicons name="checkmark" size={14} color="#FFFFFF" />
+              <Ionicons name="checkmark" size={16} color="#FFFFFF" />
             ) : (
               <Text style={estilos.numero}>{numero !== undefined ? numero : ''}</Text>
             )}
-          </View>
+          </Pressable>
         );
       })}
 
@@ -147,7 +151,7 @@ const estilos = StyleSheet.create({
   },
   numero: {
     color: '#0F172A',
-    fontSize: 11,
+    fontSize: 13,
     fontWeight: 'bold',
   },
   camion: {

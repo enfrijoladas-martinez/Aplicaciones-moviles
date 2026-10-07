@@ -41,8 +41,8 @@ export default function ComparativaScreen({ almacen, entregas, ajustes }) {
   const dVecino = distanciaDeRuta(vecino);
   const dFinal = distanciaDeRuta(r.ruta);
 
-  const mMala = calcularMetricas(dMala, ajustes);
-  const mFinal = calcularMetricas(dFinal, ajustes);
+  const mMala = calcularMetricas(dMala, ajustes, entregas.length);
+  const mFinal = calcularMetricas(dFinal, ajustes, entregas.length);
 
   const ahorroKm = dMala - dFinal;
   const ahorroPesos = mMala.costo - mFinal.costo;

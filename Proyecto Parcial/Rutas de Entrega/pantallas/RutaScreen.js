@@ -11,11 +11,13 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import Lienzo from '../componentes/Lienzo';
 import ModalResultado from '../componentes/ModalResultado';
+import ModalParada from '../componentes/ModalParada';
 import { colores, moneda, sombra, tiempo } from '../estilos/tema';
-import { crearProyeccion } from '../utilidades/geo';
+import { crearProyeccion, haversine } from '../utilidades/geo';
 import {
   calcularMetricas,
   distanciaDeRuta,
+  horaMas,
   optimizar,
   rutaSinOptimizar,
 } from '../utilidades/ruta';
@@ -31,6 +33,7 @@ export default function RutaScreen({ almacen, entregas, ajustes, alAgregarEnPunt
   const [simulando, setSimulando] = useState(false);
   const [visitadas, setVisitadas] = useState([]);
   const [resultado, setResultado] = useState(null);
+  const [parada, setParada] = useState(null);
 
   const avance = useRef(new Animated.Value(0)).current;
   const temporizador = useRef(null);
@@ -53,7 +56,51 @@ export default function RutaScreen({ almacen, entregas, ajustes, alAgregarEnPunt
   const distanciaActual = optimizada && pasos.length > 0 ? pasos[paso].distancia : distanciaMala;
 
   const planosRuta = aPlano(rutaActual);
-  const metricas = calcularMetricas(distanciaActual, ajustes);
+  const metricas = calcularMetricas(distanciaActual, ajustes, entregas.length);
+
+  const datosParada = () => {
+    if (!parada) return null;
+
+    const posicion = rutaActual.findIndex((p) => p.id === parada.id);
+
+    if (posicion <= 0) {
+      return { esAlmacen: true, indice: 0, total: 0, desdeAnterior: 0, acumulada: 0, llegada: '', otros: [] };
+    }
+
+    let acumulada = 0;
+    for (let i = 0; i < posicion; i++) {
+      acumulada += haversine(rutaActual[i], rutaActual[i + 1]);
+    }
+
+    const desdeAnterior = haversine(rutaActual[posicion - 1], rutaActual[posicion]);
+    const minutosManejo = ajustes.velocidad > 0 ? (acumulada / ajustes.velocidad) * 60 : 0;
+    const minutosServicio = (posicion - 1) * (ajustes.minutosPorEntrega || 0);
+
+    const otros = entregas.filter(
+      (e) => e.id !== parada.id && e.destinatario === parada.destinatario
+    );
+
+    return {
+      esAlmacen: false,
+      indice: posicion,
+      total: rutaActual.length - 2,
+      desdeAnterior: desdeAnterior,
+      acumulada: acumulada,
+      llegada: horaMas(Math.round(minutosManejo + minutosServicio)),
+      otros: otros,
+    };
+  };
+
+  const info = datosParada();
+
+  const alternarEntregada = (p) => {
+    if (visitadas.indexOf(p.id) !== -1) {
+      setVisitadas(visitadas.filter((id) => id !== p.id));
+    } else {
+      setVisitadas(visitadas.concat([p.id]));
+    }
+    setParada(null);
+  };
 
   useEffect(() => {
     return () => {
@@ -170,10 +217,14 @@ export default function RutaScreen({ almacen, entregas, ajustes, alAgregarEnPunt
           if (simulando || reproduciendo) return;
           alAgregarEnPunto(proyeccion.aGeo(x, y));
         }}
+        alTocarPunto={(p) => {
+          const original = todos.find((t) => t.id === p.id);
+          if (original) setParada(original);
+        }}
       />
 
       <Text style={estilos.pista}>
-        Toca el plano para agregar una entrega en esa posicion
+        Toca una parada para ver el negocio y sus paquetes
       </Text>
 
       <View style={estilos.tarjetaDistancia}>
@@ -266,6 +317,23 @@ export default function RutaScreen({ almacen, entregas, ajustes, alAgregarEnPunt
         resultado={resultado}
         alCerrar={() => setResultado(null)}
       />
+
+      {info && (
+        <ModalParada
+          visible={parada !== null}
+          parada={parada}
+          esAlmacen={info.esAlmacen}
+          indice={info.indice}
+          total={info.total}
+          desdeAnterior={info.desdeAnterior}
+          acumulada={info.acumulada}
+          llegada={info.llegada}
+          otros={info.otros}
+          entregado={parada ? visitadas.indexOf(parada.id) !== -1 : false}
+          alMarcarEntregado={alternarEntregada}
+          alCerrar={() => setParada(null)}
+        />
+      )}
     </ScrollView>
   );
 }

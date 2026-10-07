@@ -123,15 +123,28 @@ export function partirPorCapacidad(almacen, orden, capacidad) {
   return viajes;
 }
 
-export function calcularMetricas(distancia, ajustes) {
+export function calcularMetricas(distancia, ajustes, paradas) {
   const horas = ajustes.velocidad > 0 ? distancia / ajustes.velocidad : 0;
   const litros = ajustes.rendimiento > 0 ? distancia / ajustes.rendimiento : 0;
   const costo = litros * ajustes.precioLitro;
+  const servicio = paradas ? paradas * (ajustes.minutosPorEntrega || 0) : 0;
 
   return {
     distancia: distancia,
-    minutos: Math.round(horas * 60),
+    minutos: Math.round(horas * 60) + servicio,
+    minutosManejo: Math.round(horas * 60),
+    minutosServicio: servicio,
     litros: litros,
     costo: costo,
   };
+}
+
+export function horaMas(minutos) {
+  const ahora = new Date();
+  ahora.setMinutes(ahora.getMinutes() + minutos);
+
+  const h = String(ahora.getHours()).padStart(2, '0');
+  const m = String(ahora.getMinutes()).padStart(2, '0');
+
+  return h + ':' + m;
 }
