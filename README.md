@@ -2,23 +2,24 @@
 
 Repositorio de la materia de Aplicaciones Moviles.
 
+**Alumno:** Elias Martinez Garcia
+**Matricula:** 202260437
+
 ## Ramas
 
-- `parcial` — actividades del periodo parcial (aqui va todo el trabajo del semestre en curso).
-- `ordinario` — trabajo del periodo ordinario.
+- `parcial` — actividades del periodo parcial, hechas con React Native y Expo.
+- `ordinario` — actividades del periodo ordinario, hechas con Android Studio y Java.
 
-## Actividades
+## Actividades de este periodo
 
 | Actividad | Carpeta | Descripcion |
 |---|---|---|
-| Actividad 02 | `Ejemplo_02/` | Proyecto React Native (Expo, JavaScript). Ejecucion en modo web y componente `DemoChildren` que demuestra `props.children`. |
+| DemoIntent | [`DemoIntent/`](./DemoIntent) | Android Studio, Java, minSdk 27. Actividad principal con tres botones que lanzan tres actividades mediante `Intent`, pasando datos con `Extra` en ambas direcciones. |
 
-## Como ejecutar Ejemplo_02
+El detalle de cada actividad, junto con la investigacion sobre que son `Intent` y `Extra`,
+esta en el [README de DemoIntent](./DemoIntent/README.md).
 
-```bash
-cd Ejemplo_02
-npm install
-npm run web
-```
+## Como abrir DemoIntent
 
-Abre http://localhost:8081 en el navegador.
+Abrir la carpeta `DemoIntent` desde Android Studio con **File > Open**, esperar el Gradle
+sync y ejecutar con un emulador o un dispositivo fisico con depuracion USB activada.
