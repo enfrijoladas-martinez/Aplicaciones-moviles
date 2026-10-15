@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">DemoIntent</string>
+    <string name="titulo_saludo">Saludo personalizado</string>
+    <string name="titulo_calculadora">Calculadora de IMC</string>
+    <string name="titulo_lista">Mis materias</string>
+</resources>

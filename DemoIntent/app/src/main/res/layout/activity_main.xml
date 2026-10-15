@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DemoIntent"
+            android:textSize="28sp"
+            android:textStyle="bold"
+            android:textColor="@color/negro" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="Escribe tus datos y abre cualquiera de las tres actividades"
+            android:textSize="14sp"
+            android:textColor="@color/gris" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Tu nombre"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/gris" />
+
+        <EditText
+            android:id="@+id/campoNombre"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@color/blanco"
+            android:hint="Ej. Elias"
+            android:inputType="textPersonName"
+            android:padding="14dp"
+            android:textColor="@color/negro" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Tu edad"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:textColor="@color/gris" />
+
+        <EditText
+            android:id="@+id/campoEdad"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@color/blanco"
+            android:hint="Ej. 22"
+            android:inputType="number"
+            android:padding="14dp"
+            android:textColor="@color/negro" />
+
+        <Button
+            android:id="@+id/botonSaludo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:backgroundTint="@color/azul"
+            android:padding="14dp"
+            android:text="1. Saludo personalizado"
+            android:textColor="@color/blanco" />
+
+        <Button
+            android:id="@+id/botonCalculadora"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/verde"
+            android:padding="14dp"
+            android:text="2. Calculadora de IMC"
+            android:textColor="@color/blanco" />
+
+        <Button
+            android:id="@+id/botonLista"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:backgroundTint="@color/naranja"
+            android:padding="14dp"
+            android:text="3. Mis materias"
+            android:textColor="@color/blanco" />
+
+        <TextView
+            android:id="@+id/textoResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="@color/azul_suave"
+            android:padding="16dp"
+            android:text="Aqui aparece lo que la calculadora devuelve con un Extra de regreso"
+            android:textColor="@color/negro"
+            android:textSize="14sp" />
+
+    </LinearLayout>
+
+</ScrollView>

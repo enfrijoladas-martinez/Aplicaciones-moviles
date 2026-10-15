@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <TextView
+            android:id="@+id/textoTitulo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/negro"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:text="Peso en kilogramos"
+            android:textColor="@color/gris"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/campoPeso"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@color/blanco"
+            android:hint="Ej. 70"
+            android:inputType="numberDecimal"
+            android:padding="14dp"
+            android:textColor="@color/negro" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Altura en metros"
+            android:textColor="@color/gris"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/campoAltura"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:background="@color/blanco"
+            android:hint="Ej. 1.75"
+            android:inputType="numberDecimal"
+            android:padding="14dp"
+            android:textColor="@color/negro" />
+
+        <Button
+            android:id="@+id/botonCalcular"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:backgroundTint="@color/verde"
+            android:padding="14dp"
+            android:text="Calcular IMC"
+            android:textColor="@color/blanco" />
+
+        <TextView
+            android:id="@+id/textoResultado"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:background="@color/blanco"
+            android:padding="16dp"
+            android:textColor="@color/negro"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/botonRegresar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:backgroundTint="@color/gris"
+            android:padding="14dp"
+            android:text="Regresar con el resultado"
+            android:textColor="@color/blanco" />
+
+    </LinearLayout>
+
+</ScrollView>
