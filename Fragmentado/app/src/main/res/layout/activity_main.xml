@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo"
+    android:orientation="vertical"
+    android:padding="20dp">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fragmentado"
+        android:textColor="@color/negro"
+        android:textSize="26sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Una sola Activity, tres Fragments intercambiables"
+        android:textColor="@color/gris"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="18dp"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/botonPerfil"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/azul"
+            android:text="Perfil"
+            android:textColor="@color/blanco"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/botonContador"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="6dp"
+            android:layout_weight="1"
+            android:backgroundTint="@color/verde"
+            android:text="Contador"
+            android:textColor="@color/blanco"
+            android:textSize="12sp" />
+
+        <Button
+            android:id="@+id/botonColores"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:backgroundTint="@color/naranja"
+            android:text="Colores"
+            android:textColor="@color/blanco"
+            android:textSize="12sp" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/textoActivo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:background="@color/azul_suave"
+        android:padding="12dp"
+        android:text="Ningun fragmento cargado todavia"
+        android:textColor="@color/negro"
+        android:textSize="13sp" />
+
+    <FrameLayout
+        android:id="@+id/contenedorFragmentos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="14dp"
+        android:layout_weight="1"
+        android:background="@color/blanco" />
+
+    <Button
+        android:id="@+id/botonQuitar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:backgroundTint="@color/gris"
+        android:padding="12dp"
+        android:text="Quitar el fragmento actual"
+        android:textColor="@color/blanco" />
+
+</LinearLayout>

@@ -12,14 +12,17 @@ Repositorio de la materia de Aplicaciones Moviles.
 
 ## Actividades de este periodo
 
-| Actividad | Carpeta | Descripcion |
+| Actividad | Carpeta | Tema |
 |---|---|---|
-| DemoIntent | [`DemoIntent/`](./DemoIntent) | Android Studio, Java, minSdk 27. Actividad principal con tres botones que lanzan tres actividades mediante `Intent`, pasando datos con `Extra` en ambas direcciones. |
+| DemoIntent | [`DemoIntent/`](./DemoIntent) | `Intent` y `Extra`. Tres actividades lanzadas desde botones, con datos que viajan en ambas direcciones. |
+| Fragmentado | [`Fragmentado/`](./Fragmentado) | `Fragment`. Una sola Activity con tres botones que intercambian tres fragmentos distintos. |
+| VertHorizon | [`VertHorizon/`](./VertHorizon) | Ciclo de vida de una Activity. Mensajes con `Log` y `Toast`, y el problema de la perdida del dato al girar la pantalla. |
 
-El detalle de cada actividad, junto con la investigacion sobre que son `Intent` y `Extra`,
-esta en el [README de DemoIntent](./DemoIntent/README.md).
+Cada carpeta tiene su propio README con la investigacion correspondiente.
 
-## Como abrir DemoIntent
+Todos los proyectos usan **Java** con **minSdk 27** (Android 8.1 Oreo).
 
-Abrir la carpeta `DemoIntent` desde Android Studio con **File > Open**, esperar el Gradle
+## Como abrir cualquiera
+
+Abrir la carpeta del proyecto desde Android Studio con **File > Open**, esperar el Gradle
 sync y ejecutar con un emulador o un dispositivo fisico con depuracion USB activada.
