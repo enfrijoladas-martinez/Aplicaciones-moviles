@@ -17,6 +17,7 @@ Repositorio de la materia de Aplicaciones Moviles.
 | DemoIntent | [`DemoIntent/`](./DemoIntent) | `Intent` y `Extra`. Tres actividades lanzadas desde botones, con datos que viajan en ambas direcciones. |
 | Fragmentado | [`Fragmentado/`](./Fragmentado) | `Fragment`. Una sola Activity con tres botones que intercambian tres fragmentos distintos. |
 | VertHorizon | [`VertHorizon/`](./VertHorizon) | Ciclo de vida de una Activity. Mensajes con `Log` y `Toast`, y el problema de la perdida del dato al girar la pantalla. |
+| Layouts | [`Layouts/`](./Layouts) | Los cuatro layouts clasicos: `LinearLayout`, `RelativeLayout`, `FrameLayout` y `TableLayout`, cada uno con su ejemplo didactico. |
 
 Cada carpeta tiene su propio README con la investigacion correspondiente.
 

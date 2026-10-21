@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="LinearLayout vertical: uno debajo de otro"
+            android:textColor="@color/negro"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/azul"
+            android:padding="12dp"
+            android:text="Primero"
+            android:textColor="@color/blanco" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/verde"
+            android:padding="12dp"
+            android:text="Segundo"
+            android:textColor="@color/blanco" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@color/naranja"
+            android:padding="12dp"
+            android:text="Tercero"
+            android:textColor="@color/blanco" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="LinearLayout horizontal: uno al lado del otro"
+            android:textColor="@color/negro"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/azul"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="A"
+                android:textColor="@color/blanco" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/verde"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="B"
+                android:textColor="@color/blanco" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/naranja"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="C"
+                android:textColor="@color/blanco" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:text="Con layout_weight 2 el primero se lleva el doble"
+            android:textColor="@color/negro"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:background="@color/azul"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="peso 2"
+                android:textColor="@color/blanco" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/verde"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="peso 1"
+                android:textColor="@color/blanco" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/naranja"
+                android:gravity="center"
+                android:padding="12dp"
+                android:text="peso 1"
+                android:textColor="@color/blanco" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
