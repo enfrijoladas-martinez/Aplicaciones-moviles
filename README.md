@@ -18,6 +18,7 @@ Repositorio de la materia de Aplicaciones Moviles.
 | Fragmentado | [`Fragmentado/`](./Fragmentado) | `Fragment`. Una sola Activity con tres botones que intercambian tres fragmentos distintos. |
 | VertHorizon | [`VertHorizon/`](./VertHorizon) | Ciclo de vida de una Activity. Mensajes con `Log` y `Toast`, y el problema de la perdida del dato al girar la pantalla. |
 | Layouts | [`Layouts/`](./Layouts) | Los cuatro layouts clasicos: `LinearLayout`, `RelativeLayout`, `FrameLayout` y `TableLayout`, cada uno con su ejemplo didactico. |
+| Listas | [`Listas/`](./Listas) | `RecyclerView` con su Holder, Adapter y LayoutManager intercambiable. Compara contra `ListView` y demuestra el reciclaje de vistas. |
 
 Cada carpeta tiene su propio README con la investigacion correspondiente.
 
