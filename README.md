@@ -21,6 +21,7 @@ Repositorio de la materia de Aplicaciones Moviles.
 | Listas | [`Listas/`](./Listas) | Android Studio | `RecyclerView` con su Holder, Adapter y LayoutManager intercambiable. Compara contra `ListView` y demuestra el reciclaje de vistas. |
 | Persistencia | [`Persistencia/`](./Persistencia) | React Native | CRUD contra una base de datos Postgres en Supabase, con un componente por operacion. |
 | Persistencia (nativa) | [`PersistenciaAndroid/`](./PersistenciaAndroid) | Android Studio | La misma actividad sin librerias: API REST de Supabase con `HttpURLConnection`, un Fragment por operacion. |
+| Sensores | [`Sensores/`](./Sensores) | Android Studio | Acelerometro, giroscopio, podometro, magnetometro, GPS y camara, cada uno en su Activity, con menu NavDrawer y splash animado. |
 
 Cada carpeta tiene su propio README con la investigacion correspondiente.
 

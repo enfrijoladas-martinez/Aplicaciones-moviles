@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Sensores</string>
+    <string name="abrir_cajon">Abrir menu</string>
+    <string name="cerrar_cajon">Cerrar menu</string>
+</resources>

@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/menu_inicio"
+            android:icon="@android:drawable/ic_menu_info_details"
+            android:title="Inicio" />
+
+    </group>
+
+    <item android:title="Sensores de movimiento">
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/menu_acelerometro"
+                    android:icon="@android:drawable/ic_menu_sort_by_size"
+                    android:title="Acelerometro" />
+
+                <item
+                    android:id="@+id/menu_giroscopio"
+                    android:icon="@android:drawable/ic_menu_rotate"
+                    android:title="Giroscopio" />
+
+                <item
+                    android:id="@+id/menu_podometro"
+                    android:icon="@android:drawable/ic_menu_directions"
+                    android:title="Podometro" />
+
+            </group>
+        </menu>
+    </item>
+
+    <item android:title="Posicion y entorno">
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/menu_magnetometro"
+                    android:icon="@android:drawable/ic_menu_compass"
+                    android:title="Magnetometro" />
+
+                <item
+                    android:id="@+id/menu_gps"
+                    android:icon="@android:drawable/ic_menu_mylocation"
+                    android:title="GPS" />
+
+                <item
+                    android:id="@+id/menu_camara"
+                    android:icon="@android:drawable/ic_menu_camera"
+                    android:title="Camara" />
+
+            </group>
+        </menu>
+    </item>
+
+</menu>
