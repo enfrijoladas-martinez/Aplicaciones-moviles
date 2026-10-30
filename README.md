@@ -20,6 +20,7 @@ Repositorio de la materia de Aplicaciones Moviles.
 | Layouts | [`Layouts/`](./Layouts) | Android Studio | Los cuatro layouts clasicos: `LinearLayout`, `RelativeLayout`, `FrameLayout` y `TableLayout`, cada uno con su ejemplo didactico. |
 | Listas | [`Listas/`](./Listas) | Android Studio | `RecyclerView` con su Holder, Adapter y LayoutManager intercambiable. Compara contra `ListView` y demuestra el reciclaje de vistas. |
 | Persistencia | [`Persistencia/`](./Persistencia) | React Native | CRUD contra una base de datos Postgres en Supabase, con un componente por operacion. |
+| Persistencia (nativa) | [`PersistenciaAndroid/`](./PersistenciaAndroid) | Android Studio | La misma actividad sin librerias: API REST de Supabase con `HttpURLConnection`, un Fragment por operacion. |
 
 Cada carpeta tiene su propio README con la investigacion correspondiente.
 
