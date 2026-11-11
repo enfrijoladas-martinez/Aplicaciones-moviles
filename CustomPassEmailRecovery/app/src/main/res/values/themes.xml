@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.CustomPassEmailRecovery" parent="Theme.Material3.DayNight.NoActionBar">
+        <item name="colorPrimary">@color/azul</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+        <item name="android:statusBarColor" tools:targetApi="l">@color/negro</item>
+        <item name="android:windowBackground">@color/fondo</item>
+    </style>
+</resources>

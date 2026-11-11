@@ -1,0 +1,50 @@
+<div style="font-family: Arial, Helvetica, sans-serif; background-color: #F1F5F9; padding: 32px 16px;">
+
+  <div style="max-width: 480px; margin: 0 auto; background-color: #FFFFFF; border-radius: 12px; overflow: hidden;">
+
+    <div style="background-color: #0F172A; padding: 24px;">
+      <div style="color: #FFFFFF; font-size: 22px; font-weight: bold;">ChatApp</div>
+      <div style="color: #94A3B8; font-size: 13px; margin-top: 2px;">Recuperacion de contrasena</div>
+    </div>
+
+    <div style="padding: 28px 24px;">
+
+      <p style="color: #0F172A; font-size: 15px; margin: 0 0 6px 0;">
+        Hola,
+      </p>
+
+      <p style="color: #475569; font-size: 14px; line-height: 22px; margin: 0 0 24px 0;">
+        Alguien pidio restablecer la contrasena de la cuenta
+        <strong style="color: #0F172A;">{{ .Email }}</strong>.
+        Escribe este codigo en la aplicacion para continuar:
+      </p>
+
+      <div style="background-color: #F8FAFC; border: 1px solid #CBD5E1; border-radius: 10px; padding: 20px; text-align: center;">
+        <div style="color: #64748B; font-size: 11px; letter-spacing: 1px; text-transform: uppercase;">
+          Tu codigo
+        </div>
+        <div style="color: #1D4ED8; font-size: 38px; font-weight: bold; letter-spacing: 8px; margin-top: 8px;">
+          {{ .Token }}
+        </div>
+      </div>
+
+      <p style="color: #64748B; font-size: 13px; line-height: 20px; margin: 22px 0 0 0;">
+        El codigo vence en una hora y solo se puede usar una vez.
+      </p>
+
+      <p style="color: #64748B; font-size: 13px; line-height: 20px; margin: 12px 0 0 0;">
+        Si tu no pediste este cambio, ignora este correo: tu contrasena sigue igual.
+      </p>
+
+    </div>
+
+    <div style="background-color: #F8FAFC; border-top: 1px solid #E2E8F0; padding: 16px 24px;">
+      <div style="color: #94A3B8; font-size: 11px; line-height: 17px;">
+        Elias Martinez Garcia &middot; 202260437<br />
+        Aplicaciones Moviles &middot; Universidad Cristobal Colon
+      </div>
+    </div>
+
+  </div>
+
+</div>

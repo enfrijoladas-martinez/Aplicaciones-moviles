@@ -22,6 +22,7 @@ Repositorio de la materia de Aplicaciones Moviles.
 | Persistencia | [`Persistencia/`](./Persistencia) | React Native | CRUD contra una base de datos Postgres en Supabase, con un componente por operacion. |
 | Persistencia (nativa) | [`PersistenciaAndroid/`](./PersistenciaAndroid) | Android Studio | La misma actividad sin librerias: API REST de Supabase con `HttpURLConnection`, un Fragment por operacion. |
 | Sensores | [`Sensores/`](./Sensores) | Android Studio | Acelerometro, giroscopio, podometro, magnetometro, GPS y camara, cada uno en su Activity, con menu NavDrawer y splash animado. |
+| CustomPassEmailRecovery | [`CustomPassEmailRecovery/`](./CustomPassEmailRecovery) | Android Studio | Login, registro y recuperacion de contrasena con Supabase Auth, Gmail como SMTP y plantilla de correo personalizada con codigo de 6 digitos. |
 
 Cada carpeta tiene su propio README con la investigacion correspondiente.
 
