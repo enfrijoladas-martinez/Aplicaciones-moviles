@@ -1,0 +1,7 @@
+<resources>
+    <style name="Theme.MyFirstAndroidApp" parent="Theme.Material3.Light.NoActionBar">
+        <item name="colorPrimary">@color/azul</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+        <item name="android:windowBackground">@color/fondo</item>
+    </style>
+</resources>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:padding="24dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mi primera app"
+        android:textColor="@color/negro"
+        android:textSize="28sp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="Android Studio con Java y XML"
+        android:textColor="@color/gris"
+        android:textSize="13sp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/tarjeta"
+        android:orientation="vertical"
+        android:padding="22dp">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Como te llamas?"
+            android:textColor="@color/gris"
+            android:textSize="12sp" />
+
+        <EditText
+            android:id="@+id/entrada"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:autofillHints="name"
+            android:background="@drawable/campo"
+            android:hint="Escribe tu nombre"
+            android:inputType="textPersonName|textCapWords"
+            android:padding="13dp"
+            android:textColor="@color/negro"
+            android:textSize="15sp" />
+
+        <Button
+            android:id="@+id/boton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:backgroundTint="@color/azul"
+            android:text="Saludar"
+            android:textColor="@color/blanco" />
+
+        <TextView
+            android:id="@+id/saludo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="Hola, mundo!"
+            android:textColor="@color/azul"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/contador"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:gravity="center"
+            android:text="Aun no has saludado"
+            android:textColor="@color/gris"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</LinearLayout>
