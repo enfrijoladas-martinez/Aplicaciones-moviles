@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="verde">#008069</color>
+    <color name="verde_oscuro">#005C4B</color>
+    <color name="verde_claro">#25D366</color>
+    <color name="burbuja_enviada">#D9FDD3</color>
+    <color name="burbuja_recibida">#FFFFFF</color>
+    <color name="fondo_chat">#EFEAE2</color>
+    <color name="azul">#1D4ED8</color>
+    <color name="azul_visto">#34B7F1</color>
+    <color name="rojo">#DC2626</color>
+    <color name="gris">#64748B</color>
+    <color name="gris_claro">#CBD5E1</color>
+    <color name="fondo">#F1F5F9</color>
+    <color name="fondo_campo">#F8FAFC</color>
+    <color name="resaltado">#FFF3B0</color>
+    <color name="blanco">#FFFFFF</color>
+    <color name="negro">#0F172A</color>
+</resources>
