@@ -218,7 +218,10 @@ Deno.serve(async (peticion) => {
     fallidas++;
     const error = await respuesta.text();
 
-    if (respuesta.status === 404 || error.includes("UNREGISTERED")) {
+    const tokenInvalido = respuesta.status === 404 || error.includes("UNREGISTERED") ||
+      (respuesta.status === 400 && error.includes("message.token"));
+
+    if (tokenInvalido) {
       await supabase.from("devices").update({ activo: false }).eq("id_device", dispositivo.id_device);
     } else {
       console.error("FCM rechazo el envio", respuesta.status, error);

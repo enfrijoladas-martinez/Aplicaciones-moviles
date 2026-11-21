@@ -135,7 +135,10 @@ INSERT en messages
 ```
 - La cuenta de servicio de Firebase vive solo como secreto de la Edge Function
   (`FIREBASE_SERVICE_ACCOUNT`), nunca en la app ni en el repositorio.
-- Si FCM responde que un token ya no existe, el dispositivo se marca `activo = false`.
+- Si FCM responde que un token ya no existe o no es valido, el dispositivo se marca
+  `activo = false`.
+- Probado contra el proyecto real: Google entrega el access token con la cuenta de
+  servicio y FCM HTTP v1 responde; un token falso queda desactivado.
 - Al tocar la notificacion se abre `ChatActivity` en esa conversacion (con la lista de
   chats detras para poder regresar). Si el chat ya esta abierto no se muestra aviso.
 - Codigo: [`supabase/notificaciones.sql`](./supabase/notificaciones.sql) y
