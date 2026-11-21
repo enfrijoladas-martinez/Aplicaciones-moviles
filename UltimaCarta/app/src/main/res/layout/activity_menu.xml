@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/raiz"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/fondo_mesa"
+    android:fitsSystemWindows="true"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        android:padding="24dp">
+
+        <FrameLayout
+            android:layout_width="220dp"
+            android:layout_height="150dp"
+            android:layout_marginTop="16dp">
+
+            <com.example.ultimacarta.CartaView
+                android:id="@+id/portada1"
+                android:layout_width="78dp"
+                android:layout_height="117dp"
+                android:layout_gravity="center"
+                android:rotation="-18"
+                android:translationX="-56dp"
+                android:translationY="8dp" />
+
+            <com.example.ultimacarta.CartaView
+                android:id="@+id/portada2"
+                android:layout_width="78dp"
+                android:layout_height="117dp"
+                android:layout_gravity="center"
+                android:rotation="-4" />
+
+            <com.example.ultimacarta.CartaView
+                android:id="@+id/portada3"
+                android:layout_width="78dp"
+                android:layout_height="117dp"
+                android:layout_gravity="center"
+                android:rotation="14"
+                android:translationX="56dp"
+                android:translationY="8dp" />
+
+        </FrameLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:text="Última Carta"
+            android:textColor="@color/dorado"
+            android:textSize="38sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="24dp"
+            android:text="Quédate sin cartas antes que nadie"
+            android:textColor="@color/texto_suave"
+            android:textSize="14sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Tu nombre"
+                android:textColor="@color/texto_suave"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/nombre"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:autofillHints="name"
+                android:background="@drawable/campo_oscuro"
+                android:hint="Jugador"
+                android:inputType="textPersonName|textCapWords"
+                android:maxLength="14"
+                android:padding="12dp"
+                android:textColor="@color/texto"
+                android:textColorHint="@color/texto_suave"
+                android:textSize="16sp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Rivales"
+                android:textColor="@color/texto_suave"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/rivales"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:checkedButton="@+id/rivales2"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <Button
+                    android:id="@+id/rivales1"
+                    style="@style/BotonContorno"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="1" />
+
+                <Button
+                    android:id="@+id/rivales2"
+                    style="@style/BotonContorno"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="2" />
+
+                <Button
+                    android:id="@+id/rivales3"
+                    style="@style/BotonContorno"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="3" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="18dp"
+                android:text="Dificultad"
+                android:textColor="@color/texto_suave"
+                android:textSize="12sp" />
+
+            <com.google.android.material.button.MaterialButtonToggleGroup
+                android:id="@+id/dificultad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                app:checkedButton="@+id/normal"
+                app:selectionRequired="true"
+                app:singleSelection="true">
+
+                <Button
+                    android:id="@+id/facil"
+                    style="@style/BotonContorno"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Fácil" />
+
+                <Button
+                    android:id="@+id/normal"
+                    style="@style/BotonContorno"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Normal" />
+
+            </com.google.android.material.button.MaterialButtonToggleGroup>
+
+            <Button
+                android:id="@+id/jugar"
+                style="@style/BotonDorado"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:layout_marginTop="24dp"
+                android:text="Jugar"
+                android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/reglas"
+                style="@style/BotonContorno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Cómo se juega" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/estadisticas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="center"
+            android:textColor="@color/texto_suave"
+            android:textSize="13sp" />
+
+    </LinearLayout>
+
+</ScrollView>

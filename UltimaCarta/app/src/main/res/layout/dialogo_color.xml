@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:columnCount="2"
+    android:padding="16dp">
+
+    <Button
+        android:id="@+id/coral"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_columnWeight="1"
+        android:layout_margin="6dp"
+        android:backgroundTint="@color/coral"
+        android:text="Coral"
+        android:textColor="@color/blanco"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/ambar"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_columnWeight="1"
+        android:layout_margin="6dp"
+        android:backgroundTint="@color/ambar"
+        android:text="Ámbar"
+        android:textColor="@color/blanco"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/menta"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_columnWeight="1"
+        android:layout_margin="6dp"
+        android:backgroundTint="@color/menta"
+        android:text="Menta"
+        android:textColor="@color/blanco"
+        android:textStyle="bold" />
+
+    <Button
+        android:id="@+id/indigo"
+        android:layout_width="0dp"
+        android:layout_height="72dp"
+        android:layout_columnWeight="1"
+        android:layout_margin="6dp"
+        android:backgroundTint="@color/indigo"
+        android:text="Índigo"
+        android:textColor="@color/blanco"
+        android:textStyle="bold" />
+
+</GridLayout>

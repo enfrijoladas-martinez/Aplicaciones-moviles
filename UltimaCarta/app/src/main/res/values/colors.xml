@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="mesa_arriba">#1B1740</color>
+    <color name="mesa_abajo">#0E0C24</color>
+    <color name="panel">#2A2558</color>
+    <color name="panel_claro">#3A3474</color>
+    <color name="dorado">#F5C451</color>
+    <color name="texto">#F4F2FF</color>
+    <color name="texto_suave">#B9B3E6</color>
+    <color name="coral">#F0544F</color>
+    <color name="ambar">#F5A623</color>
+    <color name="menta">#1FB58F</color>
+    <color name="indigo">#4C5FD5</color>
+    <color name="blanco">#FFFFFF</color>
+</resources>

@@ -1,0 +1,23 @@
+<resources>
+    <style name="Theme.UltimaCarta" parent="Theme.Material3.Dark.NoActionBar">
+        <item name="colorPrimary">@color/dorado</item>
+        <item name="colorOnPrimary">@color/mesa_abajo</item>
+        <item name="colorSecondary">@color/dorado</item>
+        <item name="android:windowBackground">@color/mesa_abajo</item>
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">@android:color/transparent</item>
+    </style>
+
+    <style name="BotonDorado" parent="Widget.Material3.Button">
+        <item name="backgroundTint">@color/dorado</item>
+        <item name="android:textColor">@color/mesa_abajo</item>
+        <item name="android:textStyle">bold</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <style name="BotonContorno" parent="Widget.Material3.Button.OutlinedButton">
+        <item name="android:textColor">@color/texto</item>
+        <item name="strokeColor">@color/texto_suave</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+</resources>
