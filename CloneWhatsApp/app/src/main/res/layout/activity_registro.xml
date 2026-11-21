@@ -61,6 +61,27 @@
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:text="Apellido"
+                android:textColor="@color/gris"
+                android:textSize="12sp" />
+
+            <EditText
+                android:id="@+id/apellido"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:layout_marginBottom="16dp"
+                android:autofillHints="familyName"
+                android:background="@drawable/campo"
+                android:hint="Tu apellido"
+                android:inputType="textPersonName|textCapWords"
+                android:padding="13dp"
+                android:textColor="@color/negro"
+                android:textSize="15sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:text="Correo"
                 android:textColor="@color/gris"
                 android:textSize="12sp" />

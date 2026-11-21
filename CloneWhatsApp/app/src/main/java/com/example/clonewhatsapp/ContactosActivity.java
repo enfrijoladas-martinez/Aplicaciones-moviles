@@ -78,21 +78,23 @@ public class ContactosActivity extends AppCompatActivity {
     }
 
     static List<Perfil> consultarUsuarios(String texto) throws Exception {
-        StringBuilder ruta = new StringBuilder("/profiles?select=id,name,email,avatar_url,last_seen")
-                .append("&id=neq.").append(Supabase.miId())
-                .append("&order=name.asc&limit=100");
+        StringBuilder ruta = new StringBuilder(
+                "/profiles?select=id_profile,nombre,apellido,numero,foto_perfil,ultima_conexion")
+                .append("&id_profile=neq.").append(Supabase.miId())
+                .append("&order=nombre.asc&limit=100");
 
         if (!texto.isEmpty()) {
             String patron = Supabase.codificar("*" + texto.replace(",", " ") + "*");
-            ruta.append("&or=(name.ilike.").append(patron)
-                    .append(",email.ilike.").append(patron).append(")");
+            ruta.append("&or=(nombre.ilike.").append(patron)
+                    .append(",apellido.ilike.").append(patron)
+                    .append(",numero.ilike.").append(patron).append(")");
         }
 
         JSONArray filas = Supabase.consultar(ruta.toString());
         List<Perfil> perfiles = new ArrayList<>();
 
         for (int i = 0; i < filas.length(); i++) {
-            perfiles.add(Perfil.desdeJson(filas.getJSONObject(i)));
+            perfiles.add(new Perfil(filas.getJSONObject(i)));
         }
 
         return perfiles;
@@ -127,15 +129,14 @@ public class ContactosActivity extends AppCompatActivity {
         Supabase.ejecutar(() -> {
             JSONObject argumentos = new JSONObject();
             argumentos.put("otro", perfil.id);
-            return Supabase.rpc("crear_conversacion_individual", argumentos)
+            return Supabase.rpc("abrir_conversacion", argumentos)
                     .replace("\"", "").trim();
         }, new Supabase.Respuesta<String>() {
             @Override
             public void listo(String idConversacion) {
                 Intent viaje = new Intent(ContactosActivity.this, ChatActivity.class);
                 viaje.putExtra(ChatActivity.ID, idConversacion);
-                viaje.putExtra(ChatActivity.TITULO,
-                        perfil.nombre.isEmpty() ? perfil.correo : perfil.nombre);
+                viaje.putExtra(ChatActivity.TITULO, perfil.nombreCompleto());
                 viaje.putExtra(ChatActivity.AVATAR, perfil.avatar);
                 viaje.putExtra(ChatActivity.OTRO, perfil.id);
                 viaje.putExtra(ChatActivity.GRUPO, false);

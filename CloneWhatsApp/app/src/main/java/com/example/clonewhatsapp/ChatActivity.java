@@ -173,7 +173,7 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         realtime = new Realtime("chat:" + conversacionId,
-                "conversation_id=eq." + conversacionId, new Realtime.Oyente() {
+                "id_conversacion=eq." + conversacionId, new Realtime.Oyente() {
             @Override
             public void cambio(String tipo, JSONObject registro) {
                 recibirCambio(registro);
@@ -225,8 +225,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private void cargarParticipantes() {
         Supabase.ejecutar(() -> Supabase.consultar(
-                        "/conversation_members?select=user_id,profiles(name,last_seen)"
-                                + "&conversation_id=eq." + conversacionId),
+                        "/conversaciones_members?select=id_profile,profiles(nombre,apellido)"
+                                + "&id_conversacion=eq." + conversacionId),
                 new Supabase.Respuesta<JSONArray>() {
                     @Override
                     public void listo(JSONArray filas) {
@@ -235,8 +235,9 @@ public class ChatActivity extends AppCompatActivity {
                         for (int i = 0; i < filas.length(); i++) {
                             JSONObject fila = filas.optJSONObject(i);
                             JSONObject perfil = fila.optJSONObject("profiles");
-                            String id = fila.optString("user_id");
-                            String nombre = perfil == null ? "" : Perfil.texto(perfil, "name");
+                            String id = fila.optString("id_profile");
+                            String nombre = perfil == null ? "" : Perfil.completo(
+                                    Perfil.texto(perfil, "nombre"), Perfil.texto(perfil, "apellido"));
 
                             nombres.put(id, nombre);
 
@@ -273,7 +274,7 @@ public class ChatActivity extends AppCompatActivity {
         }
 
         Supabase.ejecutar(() -> Supabase.consultar(
-                        "/profiles?select=last_seen&id=eq." + otroId),
+                        "/profiles?select=ultima_conexion&id_profile=eq." + otroId),
                 new Supabase.Respuesta<JSONArray>() {
                     @Override
                     public void listo(JSONArray filas) {
@@ -282,7 +283,7 @@ public class ChatActivity extends AppCompatActivity {
                         }
 
                         textoEstado = Fechas.ultimaConexion(
-                                Perfil.texto(filas.optJSONObject(0), "last_seen"));
+                                Perfil.texto(filas.optJSONObject(0), "ultima_conexion"));
 
                         if (!otroEscribiendo) {
                             pintarEstado(textoEstado);
@@ -302,8 +303,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private void cargarMensajes() {
         Supabase.ejecutar(() -> {
-            JSONArray filas = Supabase.consultar("/messages?select=*,sender:profiles(name)"
-                    + "&conversation_id=eq." + conversacionId
+            JSONArray filas = Supabase.consultar("/messages?select=*,remitente:profiles(nombre,apellido)"
+                    + "&id_conversacion=eq." + conversacionId
                     + "&order=created_at.desc&limit=300");
 
             List<Mensaje> mensajes = new ArrayList<>();
@@ -357,7 +358,7 @@ public class ChatActivity extends AppCompatActivity {
     private void marcarLeidos() {
         Supabase.ejecutar(() -> {
             JSONObject argumentos = new JSONObject();
-            argumentos.put("conv", conversacionId);
+            argumentos.put("conversacion", conversacionId);
             return Supabase.rpc("marcar_leidos", argumentos);
         }, new Supabase.Respuesta<String>() {
             @Override
@@ -388,13 +389,13 @@ public class ChatActivity extends AppCompatActivity {
 
         Toast.makeText(this, "Enviando foto...", Toast.LENGTH_SHORT).show();
 
-        String ruta = conversacionId + "/" + UUID.randomUUID() + ".jpg";
+        String ruta = miId + "/" + conversacionId + "/" + UUID.randomUUID() + ".jpg";
         String pie = entrada.getText().toString().trim();
         entrada.setText("");
 
         Supabase.ejecutar(() -> {
             byte[] datos = Imagenes.comprimir(this, elegida, 1280);
-            return Supabase.subirImagen("chat-images", ruta, datos);
+            return Supabase.subirImagen("adjuntos", ruta, datos);
         }, new Supabase.Respuesta<String>() {
             @Override
             public void listo(String url) {
@@ -412,12 +413,13 @@ public class ChatActivity extends AppCompatActivity {
     private void insertar(String texto, String imagen, Runnable siFalla) {
         Supabase.ejecutar(() -> {
             JSONObject fila = new JSONObject();
-            fila.put("conversation_id", conversacionId);
-            fila.put("sender_id", miId);
-            fila.put("content", texto == null ? "" : texto);
+            fila.put("id_conversacion", conversacionId);
+            fila.put("id_remitente", miId);
+            fila.put("contenido", texto == null || texto.isEmpty() ? JSONObject.NULL : texto);
+            fila.put("tipo", imagen == null ? "texto" : "imagen");
 
             if (imagen != null) {
-                fila.put("image_url", imagen);
+                fila.put("url_adjunto", imagen);
             }
 
             return new Mensaje(Supabase.insertar("messages", fila));
@@ -483,12 +485,12 @@ public class ChatActivity extends AppCompatActivity {
     private void eliminar(Mensaje mensaje) {
         Supabase.ejecutar(() -> {
             JSONObject cambios = new JSONObject();
-            cambios.put("deleted", true);
-            cambios.put("content", "");
-            cambios.put("image_url", JSONObject.NULL);
+            cambios.put("eliminado", true);
+            cambios.put("contenido", JSONObject.NULL);
+            cambios.put("url_adjunto", JSONObject.NULL);
 
-            JSONArray filas = Supabase.actualizar("/messages?id=eq." + mensaje.id
-                    + "&sender_id=eq." + miId, cambios);
+            JSONArray filas = Supabase.actualizar("/messages?id_message=eq." + mensaje.id
+                    + "&id_remitente=eq." + miId, cambios);
 
             if (filas.length() == 0) {
                 throw new Exception("No se pudo eliminar el mensaje");
@@ -534,9 +536,9 @@ public class ChatActivity extends AppCompatActivity {
 
         Supabase.ejecutar(() -> {
             JSONArray filas = Supabase.consultar("/messages?select=*"
-                    + "&conversation_id=eq." + conversacionId
-                    + "&deleted=is.false"
-                    + "&content=ilike." + Supabase.codificar("*" + texto + "*")
+                    + "&id_conversacion=eq." + conversacionId
+                    + "&eliminado=is.false"
+                    + "&contenido=ilike." + Supabase.codificar("*" + texto + "*")
                     + "&order=created_at.desc&limit=50");
 
             List<Mensaje> encontrados = new ArrayList<>();

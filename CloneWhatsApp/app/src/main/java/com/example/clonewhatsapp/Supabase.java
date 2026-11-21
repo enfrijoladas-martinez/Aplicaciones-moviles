@@ -67,11 +67,12 @@ public class Supabase {
                 && (LLAVE.startsWith("eyJ") || LLAVE.startsWith("sb_publishable_"));
     }
 
-    public static void registrar(String nombre, String correo, String contrasena,
+    public static void registrar(String nombre, String apellido, String correo, String contrasena,
                                  Respuesta<Sesion> respuesta) {
         ejecutar(() -> {
             JSONObject datos = new JSONObject();
-            datos.put("name", nombre);
+            datos.put("nombre", nombre);
+            datos.put("apellido", apellido);
 
             JSONObject cuerpo = new JSONObject();
             cuerpo.put("email", correo);

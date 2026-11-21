@@ -6,28 +6,32 @@ public class Perfil {
 
     public final String id;
     public final String nombre;
-    public final String correo;
+    public final String apellido;
+    public final String numero;
     public final String avatar;
     public final String ultimaConexion;
 
-    public Perfil(String id, String nombre, String correo, String avatar, String ultimaConexion) {
-        this.id = id;
-        this.nombre = nombre;
-        this.correo = correo;
-        this.avatar = avatar;
-        this.ultimaConexion = ultimaConexion;
+    public Perfil(JSONObject json) {
+        id = texto(json, "id_profile");
+        nombre = texto(json, "nombre");
+        apellido = texto(json, "apellido");
+        numero = texto(json, "numero");
+        avatar = texto(json, "foto_perfil");
+        ultimaConexion = texto(json, "ultima_conexion");
     }
 
-    public static Perfil desdeJson(JSONObject json) {
-        return new Perfil(
-                json.optString("id"),
-                texto(json, "name"),
-                texto(json, "email"),
-                texto(json, "avatar_url"),
-                texto(json, "last_seen"));
+    public String nombreCompleto() {
+        return completo(nombre, apellido);
+    }
+
+    static String completo(String nombre, String apellido) {
+        if (apellido.isEmpty() || "Sin apellido".equals(apellido)) {
+            return nombre;
+        }
+        return (nombre + " " + apellido).trim();
     }
 
     static String texto(JSONObject json, String campo) {
-        return json.isNull(campo) ? "" : json.optString(campo, "");
+        return json == null || json.isNull(campo) ? "" : json.optString(campo, "");
     }
 }

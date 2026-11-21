@@ -53,10 +53,10 @@ public class ContactoAdapter extends RecyclerView.Adapter<ContactoAdapter.Holder
     public void onBindViewHolder(@NonNull Holder holder, int posicion) {
         Perfil perfil = perfiles.get(posicion);
 
-        holder.nombre.setText(perfil.nombre.isEmpty() ? perfil.correo : perfil.nombre);
+        holder.nombre.setText(perfil.nombreCompleto());
 
         String conexion = Fechas.ultimaConexion(perfil.ultimaConexion);
-        holder.detalle.setText(conexion.isEmpty() ? perfil.correo : conexion);
+        holder.detalle.setText(conexion.isEmpty() ? perfil.numero : conexion);
 
         Imagenes.cargar(holder.avatar, perfil.avatar, R.drawable.avatar_vacio);
 

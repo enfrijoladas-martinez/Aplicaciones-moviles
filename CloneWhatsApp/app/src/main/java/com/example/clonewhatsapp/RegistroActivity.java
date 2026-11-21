@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity;
 public class RegistroActivity extends AppCompatActivity {
 
     private EditText nombre;
+    private EditText apellido;
     private EditText correo;
     private EditText contrasena;
     private EditText repetir;
@@ -26,6 +27,7 @@ public class RegistroActivity extends AppCompatActivity {
         Bordes.ajustar(this, false);
 
         nombre = findViewById(R.id.nombre);
+        apellido = findViewById(R.id.apellido);
         correo = findViewById(R.id.correo);
         contrasena = findViewById(R.id.contrasena);
         repetir = findViewById(R.id.repetir);
@@ -38,12 +40,18 @@ public class RegistroActivity extends AppCompatActivity {
 
     private void crear() {
         String minombre = nombre.getText().toString().trim();
+        String miapellido = apellido.getText().toString().trim();
         String micorreo = correo.getText().toString().trim();
         String clave = contrasena.getText().toString();
         String copia = repetir.getText().toString();
 
         if (minombre.length() < 2) {
             mostrar("Escribe tu nombre", true);
+            return;
+        }
+
+        if (miapellido.isEmpty()) {
+            mostrar("Escribe tu apellido", true);
             return;
         }
 
@@ -66,7 +74,7 @@ public class RegistroActivity extends AppCompatActivity {
         crear.setText("Creando...");
         aviso.setVisibility(View.GONE);
 
-        Supabase.registrar(minombre, micorreo, clave, new Supabase.Respuesta<Sesion>() {
+        Supabase.registrar(minombre, miapellido, micorreo, clave, new Supabase.Respuesta<Sesion>() {
             @Override
             public void listo(Sesion sesion) {
                 if (sesion.hayToken()) {

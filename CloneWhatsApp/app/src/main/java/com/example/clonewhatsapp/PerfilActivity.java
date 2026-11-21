@@ -22,6 +22,7 @@ public class PerfilActivity extends AppCompatActivity {
 
     private ImageView foto;
     private EditText nombre;
+    private EditText apellido;
     private TextView correo;
     private TextView aviso;
     private Button guardar;
@@ -42,6 +43,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         foto = findViewById(R.id.foto);
         nombre = findViewById(R.id.nombre);
+        apellido = findViewById(R.id.apellido);
         correo = findViewById(R.id.correo);
         aviso = findViewById(R.id.aviso);
         guardar = findViewById(R.id.guardar);
@@ -65,8 +67,8 @@ public class PerfilActivity extends AppCompatActivity {
         String miId = Supabase.miId();
 
         Supabase.ejecutar(() -> {
-            JSONArray filas = Supabase.consultar("/profiles?select=*&id=eq." + miId);
-            return filas.length() > 0 ? Perfil.desdeJson(filas.getJSONObject(0)) : null;
+            JSONArray filas = Supabase.consultar("/profiles?select=*&id_profile=eq." + miId);
+            return filas.length() > 0 ? new Perfil(filas.getJSONObject(0)) : null;
         }, new Supabase.Respuesta<Perfil>() {
             @Override
             public void listo(Perfil perfil) {
@@ -74,7 +76,8 @@ public class PerfilActivity extends AppCompatActivity {
                     return;
                 }
 
-                nombre.setText(perfil.nombre);
+                nombre.setText("Sin nombre".equals(perfil.nombre) ? "" : perfil.nombre);
+                apellido.setText("Sin apellido".equals(perfil.apellido) ? "" : perfil.apellido);
                 avatarActual = perfil.avatar;
                 Imagenes.cargar(foto, perfil.avatar, R.drawable.avatar_vacio);
             }
@@ -99,7 +102,7 @@ public class PerfilActivity extends AppCompatActivity {
 
         Supabase.ejecutar(() -> {
             byte[] datos = Imagenes.comprimir(this, elegida, 512);
-            return Supabase.subirImagen("avatars", ruta, datos);
+            return Supabase.subirImagen("avatares", ruta, datos);
         }, new Supabase.Respuesta<String>() {
             @Override
             public void listo(String url) {
@@ -121,9 +124,15 @@ public class PerfilActivity extends AppCompatActivity {
 
     private void guardar() {
         String minombre = nombre.getText().toString().trim();
+        String miapellido = apellido.getText().toString().trim();
 
         if (minombre.length() < 2) {
             mostrar("Escribe tu nombre");
+            return;
+        }
+
+        if (miapellido.isEmpty()) {
+            mostrar("Escribe tu apellido");
             return;
         }
 
@@ -135,9 +144,10 @@ public class PerfilActivity extends AppCompatActivity {
 
         Supabase.ejecutar(() -> {
             JSONObject cambios = new JSONObject();
-            cambios.put("name", minombre);
-            cambios.put("avatar_url", avatarActual.isEmpty() ? JSONObject.NULL : avatarActual);
-            return Supabase.actualizar("/profiles?id=eq." + miId, cambios);
+            cambios.put("nombre", minombre);
+            cambios.put("apellido", miapellido);
+            cambios.put("foto_perfil", avatarActual.isEmpty() ? JSONObject.NULL : avatarActual);
+            return Supabase.actualizar("/profiles?id_profile=eq." + miId, cambios);
         }, new Supabase.Respuesta<JSONArray>() {
             @Override
             public void listo(JSONArray filas) {

@@ -47,7 +47,7 @@ public class ConversacionAdapter extends RecyclerView.Adapter<ConversacionAdapte
         for (Conversacion conversacion : todas) {
             if (filtro.isEmpty()
                     || conversacion.tituloVisible().toLowerCase(Locale.ROOT).contains(filtro)
-                    || conversacion.ultimoMensaje.toLowerCase(Locale.ROOT).contains(filtro)) {
+                    || conversacion.resumen().toLowerCase(Locale.ROOT).contains(filtro)) {
                 visibles.add(conversacion);
             }
         }
@@ -70,22 +70,10 @@ public class ConversacionAdapter extends RecyclerView.Adapter<ConversacionAdapte
         holder.titulo.setText(conversacion.tituloVisible());
         holder.fecha.setText(Fechas.corta(conversacion.ultimaFecha));
 
-        String ultimo = conversacion.ultimoMensaje;
-
-        if (ultimo.isEmpty() && conversacion.ultimaFecha.isEmpty()) {
-            ultimo = conversacion.esGrupo ? "Grupo creado" : "Toca para escribir";
-        }
-
-        holder.ultimo.setText(ultimo);
-
         boolean mio = conversacion.ultimoRemitente.equals(miId) && !conversacion.ultimaFecha.isEmpty();
 
-        if (mio) {
-            Estados.pintar(holder.palomitas, conversacion.ultimoEstado);
-            holder.palomitas.setVisibility(View.VISIBLE);
-        } else {
-            holder.palomitas.setVisibility(View.GONE);
-        }
+        holder.ultimo.setText(mio ? "Tu: " + conversacion.resumen() : conversacion.resumen());
+        holder.palomitas.setVisibility(View.GONE);
 
         if (conversacion.sinLeer > 0) {
             holder.sinLeer.setText(String.valueOf(conversacion.sinLeer));

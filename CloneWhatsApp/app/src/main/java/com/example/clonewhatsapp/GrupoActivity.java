@@ -119,7 +119,7 @@ public class GrupoActivity extends AppCompatActivity {
 
         Supabase.ejecutar(() -> {
             JSONObject argumentos = new JSONObject();
-            argumentos.put("nombre", nombre);
+            argumentos.put("nombre_grupo", nombre);
             argumentos.put("miembros", new JSONArray(miembros));
             return Supabase.rpc("crear_grupo", argumentos).replace("\"", "").trim();
         }, new Supabase.Respuesta<String>() {

@@ -96,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         realtime = new Realtime("chats:" + miId, null, new Realtime.Oyente() {
             @Override
             public void cambio(String tipo, JSONObject registro) {
-                if ("INSERT".equals(tipo) && !miId.equals(registro.optString("sender_id"))) {
+                if ("INSERT".equals(tipo) && !miId.equals(registro.optString("id_remitente"))) {
                     marcarRecibidos();
                 } else {
                     cargar();
@@ -157,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void cargar() {
         Supabase.ejecutar(() -> {
-            JSONArray filas = new JSONArray(Supabase.rpc("mis_conversaciones", null));
+            JSONArray filas = new JSONArray(Supabase.rpc("mis_chats", null));
             List<Conversacion> conversaciones = new ArrayList<>();
 
             for (int i = 0; i < filas.length(); i++) {

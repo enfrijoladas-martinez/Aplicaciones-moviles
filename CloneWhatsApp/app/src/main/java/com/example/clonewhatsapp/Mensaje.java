@@ -19,17 +19,19 @@ public class Mensaje {
     public final String fecha;
 
     public Mensaje(JSONObject json) {
-        id = json.optString("id");
-        conversacionId = Perfil.texto(json, "conversation_id");
-        remitenteId = Perfil.texto(json, "sender_id");
-        contenido = Perfil.texto(json, "content");
-        imagen = Perfil.texto(json, "image_url");
-        estado = json.isNull("status") ? ENVIADO : json.optString("status", ENVIADO);
-        eliminado = json.optBoolean("deleted", false);
+        id = Perfil.texto(json, "id_message");
+        conversacionId = Perfil.texto(json, "id_conversacion");
+        remitenteId = Perfil.texto(json, "id_remitente");
+        contenido = Perfil.texto(json, "contenido");
+        imagen = Perfil.texto(json, "url_adjunto");
+        estado = json.isNull("estado") ? ENVIADO : json.optString("estado", ENVIADO);
+        eliminado = json.optBoolean("eliminado", false);
         fecha = Perfil.texto(json, "created_at");
 
-        JSONObject remitente = json.optJSONObject("sender");
-        remitenteNombre = remitente == null ? "" : Perfil.texto(remitente, "name");
+        JSONObject remitente = json.optJSONObject("remitente");
+        remitenteNombre = remitente == null
+                ? ""
+                : Perfil.completo(Perfil.texto(remitente, "nombre"), Perfil.texto(remitente, "apellido"));
     }
 
     public boolean esMio(String miId) {

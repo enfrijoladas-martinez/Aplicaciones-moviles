@@ -10,16 +10,15 @@ para las fotos.
 
 ## Como ponerlo a funcionar
 
-1. En Supabase, abrir **SQL Editor**, pegar todo el contenido de
-   [`supabase/schema.sql`](./supabase/schema.sql) y darle **Run**. Crea las tablas, las
-   funciones, las politicas RLS, los buckets de fotos y activa Realtime en `messages`.
-   Se puede correr varias veces sin romper nada.
-2. (Opcional) En `local.properties` poner la URL y la llave publica del proyecto:
+1. La base de datos ya esta montada en el proyecto de Supabase **CustomPassEmailRecovery**.
+   Para recrearla en otro proyecto: abrir **SQL Editor**, pegar
+   [`supabase/schema.sql`](./supabase/schema.sql) y darle **Run** (se puede correr varias
+   veces sin romper nada).
+2. (Opcional) Para usar otro proyecto, poner en `local.properties`:
    ```properties
    SUPABASE_URL=https://TU-PROYECTO.supabase.co
    SUPABASE_KEY=sb_publishable_...
    ```
-   Si no se ponen, se usa el mismo proyecto de `CustomPassEmailRecovery`.
 3. Abrir la carpeta con **File > Open**, esperar el Gradle sync y correr en dos
    dispositivos o emuladores con cuentas distintas.
 
@@ -44,21 +43,31 @@ para las fotos.
 ```
 auth.users ──1:1── profiles ──1:N── devices
                       │
-                      ├──N:M── conversations   (por conversation_members)
+                      ├──N:M── conversaciones   (por conversaciones_members)
                       │
-                      └──1:N── messages ──N:1── conversations
+                      └──1:N── messages ──N:1── conversaciones
 ```
 
 | Tabla | Llave primaria | Llaves foraneas |
 |---|---|---|
-| `profiles` | `id` | `id → auth.users.id` |
-| `devices` | `id` | `user_id → profiles.id` |
-| `conversations` | `id` | `created_by → profiles.id` |
-| `conversation_members` | `(conversation_id, user_id)` | `conversation_id → conversations.id`, `user_id → profiles.id` |
-| `messages` | `id` | `conversation_id → conversations.id`, `sender_id → profiles.id` |
+| `profiles` | `id_profile` | `id_profile → auth.users.id` |
+| `devices` | `id_device` | `id_profile → profiles` |
+| `conversaciones` | `id_conversacion` | `creada_por → profiles` |
+| `conversaciones_members` | `id_miembro` (unico por conversacion y perfil) | `id_conversacion → conversaciones`, `id_profile → profiles` |
+| `messages` | `id_message` | `id_conversacion → conversaciones`, `id_remitente → profiles`, `id_respuesta_a → messages` |
 
-Funciones RPC: `crear_conversacion_individual`, `crear_grupo`, `mis_conversaciones`,
-`marcar_recibidos`, `marcar_leidos`, `tocar_conexion` y `es_miembro`.
+| Funcion RPC | Para que |
+|---|---|
+| `abrir_conversacion(otro)` | Regresa el chat individual con esa persona o lo crea |
+| `crear_grupo(nombre_grupo, miembros)` | Crea un grupo; quien lo crea queda como `admin` |
+| `mis_chats()` | Lista de chats con el otro participante, ultimo mensaje y no leidos |
+| `marcar_recibidos()` | Pasa a `recibido` los mensajes que me llegaron |
+| `marcar_leidos(conversacion)` | Pasa a `leido` los mensajes del chat y actualiza `ultimo_leido_en` |
+| `tocar_conexion()` | Actualiza `ultima_conexion` |
+| `es_miembro(conversacion)` | La usan las politicas RLS |
+
+Buckets de Storage: `avatares` y `adjuntos`; cada usuario solo sube dentro de su carpeta
+(`<id_usuario>/...`).
 
 ## Avance por fase
 
@@ -79,12 +88,12 @@ llaves primarias y foraneas. Un trigger crea el perfil cuando alguien se registr
   `refresh_token` y si ya no sirve regresa al login
 
 ### Fase 4: Perfiles y contactos ✅
-Nombre y foto (bucket `avatars`), consulta de usuarios, `RecyclerView` de contactos,
+Nombre, apellido y foto (bucket `avatares`), consulta de usuarios, `RecyclerView` de contactos,
 busqueda por nombre o correo y seleccion de destinatario.
 
 ### Fase 5: Conversaciones ✅
-`crear_conversacion_individual` reutiliza el chat si ya existe. `mis_conversaciones`
-regresa el otro participante, el ultimo mensaje y los no leidos.
+`abrir_conversacion` reutiliza el chat si ya existe. `mis_chats` regresa el otro
+participante, el ultimo mensaje y los no leidos.
 
 ### Fase 6: Envio de mensajes ✅
 Interfaz de chat, burbujas verdes (enviadas) y blancas (recibidas), insercion en
@@ -101,29 +110,31 @@ Los mensajes nuevos y los cambios de estado se agregan al `RecyclerView` sin rec
 | Recibido | El destinatario abre la app (`marcar_recibidos`) | ✓✓ gris |
 | Leido | El destinatario abre el chat (`marcar_leidos`) | ✓✓ azul |
 
-Ultima conexion con `profiles.last_seen` ("en linea" o "ult. vez hoy a las 10:30").
+Ultima conexion con `profiles.ultima_conexion` ("en linea" o "ult. vez hoy a las 10:30").
 Indicador de escritura con `broadcast` de Realtime ("escribiendo...").
 
 ### Fase 9: Firebase Cloud Messaging ⏳
-Pendiente. La tabla `devices` ya esta lista para guardar los tokens FCM.
+Pendiente. La tabla `devices` ya tiene la columna `token_push` para guardar los tokens FCM.
 
 ### Fase 10: Automatizacion de notificaciones ⏳
 Pendiente (Edge Function de Supabase + FCM HTTP v1).
 
 ### Fase 11: Funcionalidades adicionales ✅
 - Fotografia de perfil
-- Envio de imagenes (bucket `chat-images`, se ven en grande al tocarlas)
+- Envio de imagenes (bucket `adjuntos`, se ven en grande al tocarlas)
 - Conversaciones grupales con nombre del remitente en cada burbuja
 - Eliminacion de mensajes para todos (mantener presionado un mensaje propio)
 - Busqueda de mensajes dentro del chat (lupa en la barra)
 
 ### Fase 12: Seguridad y liberacion
 - ✅ Row Level Security en las cinco tablas
+- ✅ Funciones cerradas al rol `anon`: solo se pueden llamar con sesion iniciada
 - ✅ Permisos por conversacion: solo los miembros leen, escriben o suben fotos a un chat
 - ✅ Tokens cifrados con Android Keystore y excluidos del respaldo
 - ⏳ Pruebas con multiples dispositivos
 - ⏳ Generar APK firmado (**Build > Generate Signed App Bundle / APK**)
 
-Las politicas se probaron con tres usuarios: nadie puede leer chats ajenos, enviar
+Las politicas se probaron en el proyecto real con tres usuarios (dentro de una transaccion
+que se deshizo al final): nadie puede leer chats ajenos, enviar
 mensajes a nombre de otro, borrar mensajes que no son suyos ni subir fotos a una
 conversacion donde no esta.
