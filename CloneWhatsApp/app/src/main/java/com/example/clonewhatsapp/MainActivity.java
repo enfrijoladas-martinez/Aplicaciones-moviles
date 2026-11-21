@@ -11,7 +11,13 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+
 import androidx.activity.OnBackPressedCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -35,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private EditText textoBusqueda;
     private Realtime realtime;
     private String miId;
+
+    private final ActivityResultLauncher<String> pedirPermiso =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), concedido -> {
+            });
 
     private final OnBackPressedCallback cerrarBusqueda = new OnBackPressedCallback(false) {
         @Override
@@ -92,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
             public void afterTextChanged(Editable s) {
             }
         });
+
+        pedirPermisoNotificaciones();
+        Notificaciones.registrarToken();
 
         realtime = new Realtime("chats:" + miId, null, new Realtime.Oyente() {
             @Override
@@ -239,17 +252,26 @@ public class MainActivity extends AppCompatActivity {
                 .setMessage("Vas a salir de tu cuenta en este telefono.")
                 .setNegativeButton("Cancelar", null)
                 .setPositiveButton("Salir", (dialogo, cual) ->
-                        Supabase.salir(this, new Supabase.Respuesta<String>() {
-                            @Override
-                            public void listo(String dato) {
-                                LoginActivity.volver(MainActivity.this, null);
-                            }
+                        Notificaciones.quitarToken(() ->
+                                Supabase.salir(this, new Supabase.Respuesta<String>() {
+                                    @Override
+                                    public void listo(String dato) {
+                                        LoginActivity.volver(MainActivity.this, null);
+                                    }
 
-                            @Override
-                            public void fallo(String mensaje) {
-                                LoginActivity.volver(MainActivity.this, null);
-                            }
-                        }))
+                                    @Override
+                                    public void fallo(String mensaje) {
+                                        LoginActivity.volver(MainActivity.this, null);
+                                    }
+                                })))
                 .show();
+    }
+
+    private void pedirPermisoNotificaciones() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU
+                && checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS)
+                != PackageManager.PERMISSION_GRANTED) {
+            pedirPermiso.launch(Manifest.permission.POST_NOTIFICATIONS);
+        }
     }
 }

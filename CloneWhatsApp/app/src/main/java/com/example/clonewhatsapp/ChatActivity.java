@@ -41,6 +41,8 @@ public class ChatActivity extends AppCompatActivity {
     public static final String OTRO = "otro_id";
     public static final String GRUPO = "es_grupo";
 
+    public static volatile String abierta = null;
+
     private static final long ESCRIBIENDO_DURA = 3500;
     private static final long AVISO_ESCRITURA_CADA = 2000;
     private static final long REVISAR_CONEXION_CADA = 30000;
@@ -203,6 +205,8 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        abierta = conversacionId;
+        Notificaciones.quitarDeLaBarra(this, conversacionId);
         Presencia.entrar();
         reloj.post(revisarConexion);
     }
@@ -210,6 +214,7 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
+        abierta = null;
         Presencia.salir();
         reloj.removeCallbacks(revisarConexion);
     }

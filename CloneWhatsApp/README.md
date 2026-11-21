@@ -113,11 +113,33 @@ Los mensajes nuevos y los cambios de estado se agregan al `RecyclerView` sin rec
 Ultima conexion con `profiles.ultima_conexion` ("en linea" o "ult. vez hoy a las 10:30").
 Indicador de escritura con `broadcast` de Realtime ("escribiendo...").
 
-### Fase 9: Firebase Cloud Messaging ⏳
-Pendiente. La tabla `devices` ya tiene la columna `token_push` para guardar los tokens FCM.
+### Fase 9: Firebase Cloud Messaging ✅
+- Proyecto de Firebase **ChatApp** con la app Android `com.example.clonewhatsapp`
+  registrada (`app/google-services.json`).
+- `MyFirebaseMessagingService` recibe el token FCM (`onNewToken`) y los mensajes
+  (`onMessageReceived`).
+- `Notificaciones.java` crea el canal **Mensajes** y guarda el token en la tabla `devices`
+  con la RPC `registrar_dispositivo`. Al cerrar sesion se desactiva con `quitar_dispositivo`.
+- En Android 13+ se pide el permiso `POST_NOTIFICATIONS`.
 
-### Fase 10: Automatizacion de notificaciones ⏳
-Pendiente (Edge Function de Supabase + FCM HTTP v1).
+### Fase 10: Automatizacion de notificaciones ✅
+```
+INSERT en messages
+   └─ trigger al_insertar_mensaje (pg_net)
+        └─ POST firmado con un secreto guardado en Vault
+             └─ Edge Function notificar-mensaje
+                  ├─ valida el secreto (si no coincide responde 401)
+                  ├─ busca a los demas miembros y sus tokens activos en devices
+                  ├─ pide un access token de Google con la cuenta de servicio (JWT RS256)
+                  └─ envia a FCM HTTP v1 (projects/<id>/messages:send)
+```
+- La cuenta de servicio de Firebase vive solo como secreto de la Edge Function
+  (`FIREBASE_SERVICE_ACCOUNT`), nunca en la app ni en el repositorio.
+- Si FCM responde que un token ya no existe, el dispositivo se marca `activo = false`.
+- Al tocar la notificacion se abre `ChatActivity` en esa conversacion (con la lista de
+  chats detras para poder regresar). Si el chat ya esta abierto no se muestra aviso.
+- Codigo: [`supabase/notificaciones.sql`](./supabase/notificaciones.sql) y
+  [`supabase/functions/notificar-mensaje/index.ts`](./supabase/functions/notificar-mensaje/index.ts).
 
 ### Fase 11: Funcionalidades adicionales ✅
 - Fotografia de perfil

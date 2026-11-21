@@ -11,6 +11,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
         contexto = getApplicationContext();
+        Notificaciones.crearCanales(this);
     }
 
     public static Context contexto() {
