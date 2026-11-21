@@ -27,8 +27,12 @@ Repositorio de la materia de Aplicaciones Moviles.
 | Sensores | [`Sensores/`](./Sensores) | Android Studio | Acelerometro, giroscopio, podometro, magnetometro, GPS y camara, cada uno en su Activity, con menu NavDrawer y splash animado. |
 | CustomPassEmailRecovery | [`CustomPassEmailRecovery/`](./CustomPassEmailRecovery) | Android Studio | Login, registro y recuperacion de contrasena con Supabase Auth, Gmail como SMTP y plantilla de correo personalizada con codigo de 6 digitos. |
 | CloneWhatsApp | [`CloneWhatsApp/`](./CloneWhatsApp) | Android Studio | Clon de WhatsApp con Supabase: JWT, contactos, chats individuales y grupales, Realtime, estados enviado/recibido/leido, escribiendo, fotos y RLS. |
+| **Proyecto final: Última Carta** | [`UltimaCarta/`](./UltimaCarta) | Android Studio | Juego de mesa de cartas por colores para 2 a 4 jugadores contra la computadora: cartas dibujadas con `Canvas`, bots con dos dificultades, estadísticas y 11 pruebas JUnit. |
 
 Cada carpeta tiene su propio README con la investigacion correspondiente.
+
+Al subir esta rama, GitHub Actions compila el APK de los proyectos de Android Studio
+nuevos (pestana **Actions** > ultima ejecucion > **Artifacts**).
 
 ## Como abrir cada una
 
