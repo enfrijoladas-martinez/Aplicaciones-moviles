@@ -35,7 +35,7 @@ para las fotos.
 | `ContactosActivity` + `ContactoAdapter` | Usuarios registrados, busqueda y seleccion de destinatario. |
 | `GrupoActivity` | Crear conversacion grupal. |
 | `ChatActivity` + `MensajeAdapter` | Chat con burbujas, fotos, estados, escribiendo, ultima conexion, eliminar y buscar mensajes. |
-| `Presencia.java` | Actualiza `last_seen` cada 30 s mientras la app esta abierta. |
+| `Presencia.java` | Actualiza `ultima_conexion` cada 30 s mientras la app esta abierta. |
 | `Imagenes.java` | Descarga con cache en memoria y compresion JPEG antes de subir. |
 
 ## Base de datos
@@ -76,7 +76,7 @@ Proyecto Java + XML, permiso de `INTERNET`, dependencias en `libs.versions.toml`
 llave publica en `BuildConfig` desde `local.properties`.
 
 ### Fase 2: Diseno de la base de datos ✅
-Tablas `profiles`, `devices`, `conversations`, `conversation_members` y `messages` con sus
+Tablas `profiles`, `devices`, `conversaciones`, `conversaciones_members` y `messages` con sus
 llaves primarias y foraneas. Un trigger crea el perfil cuando alguien se registra.
 
 ### Fase 3: Autenticacion ✅
