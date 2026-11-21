@@ -149,8 +149,29 @@ Deno.serve(async (peticion) => {
     return responder({ error: "Falta el secreto FIREBASE_SERVICE_ACCOUNT" }, 500);
   }
 
-  const cuenta = JSON.parse(cuentaTexto) as CuentaServicio;
-  const acceso = await tokenDeGoogle(cuenta);
+  let cuenta: CuentaServicio;
+
+  try {
+    const leida = JSON.parse(cuentaTexto);
+    cuenta = (typeof leida === "string" ? JSON.parse(leida) : leida) as CuentaServicio;
+  } catch {
+    return responder({ error: "FIREBASE_SERVICE_ACCOUNT no es un JSON valido" }, 500);
+  }
+
+  if (!cuenta.private_key || !cuenta.client_email || !cuenta.project_id) {
+    return responder({
+      error: "FIREBASE_SERVICE_ACCOUNT no es la clave de una cuenta de servicio",
+      campos_encontrados: Object.keys(cuenta),
+    }, 500);
+  }
+
+  let acceso: string;
+
+  try {
+    acceso = await tokenDeGoogle(cuenta);
+  } catch (error) {
+    return responder({ error: String(error) }, 500);
+  }
 
   const remitente = nombreCompleto(mensaje.remitente as { nombre?: string; apellido?: string });
   const conversacion = mensaje.conversacion as { tipo?: string; nombre?: string } | null;
